@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>নাগরিক সহায়তা - স্বাধীন সামাজিক উদ্যোগ</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- বাংলা টেক্সট নিখুঁতভাবে PDF করার জন্য html2canvas ও jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   
@@ -13,17 +12,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+    body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
-    .crime-card.active { border-color: #2563eb !important; background-color: #eff6ff !important; box-shadow: 0 4px 14px rgba(37,99,235,0.25); transform: scale(1.02); }
-    .crime-card * { pointer-events: none; }
+    .crime-card { cursor: pointer; user-select: none; transition: all 0.2s ease; }
+    .crime-card.active { border-color: #2563eb !important; background-color: #eff6ff !important; box-shadow: 0 4px 12px rgba(37,99,235,0.2); transform: scale(1.02); }
     .record-pulse { animation: recPulse 1.2s infinite; }
     @keyframes recPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.6; } }
-    @media print {
-      body * { visibility: hidden; }
-      #printableApplication, #printableApplication * { visibility: visible; }
-      #printableApplication { position: absolute; left: 0; top: 0; width: 100%; display: block !important; padding: 25px; color: #000; background: #fff; }
-    }
   </style>
 </head>
 <body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-800 min-h-screen pb-36">
@@ -70,13 +64,13 @@
 
   <main class="max-w-md mx-auto px-4 mt-4 space-y-5">
 
-    <!-- উদ্দেশ্য ও স্বচ্ছতা ব্যানার -->
+    <!-- ব্যানার -->
     <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl text-xs text-slate-300 space-y-1.5 shadow-md">
       <div class="flex items-center gap-1.5 font-bold text-emerald-400">
         <span>🌱</span> <span>আমাদের উদ্দেশ্য ও অবস্থান:</span>
       </div>
       <p class="text-[11px] text-slate-300 leading-relaxed">
-        এটি দেশ ও সমাজকে দুর্নীতিমুক্ত রাখতে এবং সাধারণ মানুষের সুবিধার্থে গড়ে তোলা একটি <strong>সম্পূর্ণ স্বাধীন ও অলাভজনক সামাজিক নাগরিক উদ্যোগ</strong>। অপরাধ দমন ও অধিকার রক্ষায় সাধারণ মানুষকে লিখিত আইনি দরখাস্ত প্রস্তুত করতে এবং উপযুক্ত প্রশাসনিক টেবিলে পৌঁছে দিতে এটি কাজ করে।
+        এটি দেশ ও সমাজকে দুর্নীতিমুক্ত রাখতে এবং সাধারণ মানুষের সুবিধার্থে গড়ে তোলা একটি <strong>সম্পূর্ণ স্বাধীন ও অলাভজনক সামাজিক নাগরিক উদ্যোগ</strong>।
       </p>
     </div>
 
@@ -89,73 +83,73 @@
       <h2 class="text-base font-bold text-slate-900">অভিযোগ বা সেবার বিষয় নির্বাচন করুন</h2>
 
       <div class="grid grid-cols-2 gap-2.5 pt-1">
-        <button type="button" data-crime="drugs" onclick="selectCrime('drugs', this)" class="crime-card active flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="drugs" onclick="selectCrime('drugs', this)" class="crime-card active flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg shrink-0">💊</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">মাদক ব্যবসা ও জুয়া</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মাদক স্পট, আড্ডা, কারবারি</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মাদক স্পট, কারবারি</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="harassment" onclick="selectCrime('harassment', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="harassment" onclick="selectCrime('harassment', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0">⚠️</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">যৌন হয়রানি ও ইভটিজিং</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">নিপীড়ন, রাস্তায় উত্যক্ত, যৌতুক</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">নিপীড়ন, রাস্তায় উত্যক্ত</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="extortion" onclick="selectCrime('extortion', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="extortion" onclick="selectCrime('extortion', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg shrink-0">🔫</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">চাঁদাবাজি ও ছিনতাই</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">টাকা দাবি, সন্ত্রাসী দল, মাস্তানি</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">টাকা দাবি, সন্ত্রাসী দল</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="corruption" onclick="selectCrime('corruption', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="corruption" onclick="selectCrime('corruption', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg shrink-0">💰</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">ঘুষ ও অনিয়ম</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">প্রকল্পে আত্মসাৎ, ঘুষ দাবি</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">প্রকল্পে আত্মসাৎ, ঘুষ</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="canal" onclick="selectCrime('canal', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="canal" onclick="selectCrime('canal', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-lg shrink-0">🌊</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">খাল ও জলাশয় দখল</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জলাবদ্ধতা, সরকারি জায়গা দখল</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জলাবদ্ধতা, জায়গা দখল</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="union_issue" onclick="selectCrime('union_issue', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="union_issue" onclick="selectCrime('union_issue', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0">🏛️</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">রাস্তা ও কালভার্ট ভাঙন</h3>
             <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মেরামত কাজ, ব্রিজের সমস্যা</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="dispute" onclick="selectCrime('dispute', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="dispute" onclick="selectCrime('dispute', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg shrink-0">📜</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">সীমানা বিরোধ ও সালিশ</h3>
             <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জমি বিরোধ, গ্রাম আদালত</p>
           </div>
-        </button>
+        </div>
 
-        <button type="button" data-crime="fire" onclick="selectCrime('fire', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+        <div data-crime="fire" onclick="selectCrime('fire', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
           <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg shrink-0">🔥</div>
           <div>
             <h3 class="text-xs font-bold text-slate-800">অগ্নিকাণ্ড ও উদ্ধার</h3>
             <p class="text-[10px] text-slate-500 leading-tight mt-0.5">আগুন, উদ্ধারকাজ, গ্যাস লিক</p>
           </div>
-        </button>
+        </div>
       </div>
     </section>
 
-    <!-- ধাপ ২: প্রশাসনিক এলাকা ও কাস্টম ইনপুট -->
+    <!-- ধাপ ২: প্রশাসনিক এলাকা নির্বাচন -->
     <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3.5">
       <div class="flex items-center justify-between">
         <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ২</span>
@@ -206,14 +200,16 @@
           </div>
         </div>
 
+        <!-- কাস্টম উপজেলা লেখার বক্স -->
         <div id="customUpazilaBlock" class="hidden">
-          <label class="block text-[11px] font-bold text-blue-700 mb-1">আপনার উপজেলা/থানার সঠিক নামটি লিখুন:</label>
-          <input type="text" id="customUpazilaInput" oninput="updateRoutingResult()" placeholder="উদা: সোনারগাঁও বা বন্দর থানা" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+          <label class="block text-[11px] font-bold text-blue-700 mb-1">উপজেলা/থানার নাম লিখুন:</label>
+          <input type="text" id="customUpazilaInput" oninput="updateRoutingResult()" placeholder="উদা: সোনারগাঁও বা রূপগঞ্জ" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
         </div>
 
+        <!-- কাস্টম ইউনিয়ন লেখার বক্স -->
         <div id="customUnionBlock" class="hidden">
-          <label class="block text-[11px] font-bold text-blue-700 mb-1">আপনার ইউনিয়ন/পৌরসভার সঠিক নামটি লিখুন:</label>
-          <input type="text" id="customUnionInput" oninput="updateRoutingResult()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন বা ২ নং ওয়ার্ড" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+          <label class="block text-[11px] font-bold text-blue-700 mb-1">ইউনিয়ন/পৌরসভার নাম লিখুন:</label>
+          <input type="text" id="customUnionInput" oninput="updateRoutingResult()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
         </div>
 
         <div id="wardBlock" class="hidden grid grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-2xl border border-slate-200">
@@ -256,7 +252,7 @@
       </div>
     </section>
 
-    <!-- ধাপ ৩: লিখিত অভিযোগ ও প্রমাণাদি -->
+    <!-- ধাপ ৩: লিখিত বিবরণ ও প্রমাণ -->
     <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
       <div class="flex items-center justify-between">
         <span class="text-[11px] font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ৩</span>
@@ -279,7 +275,7 @@
       </div>
       <audio id="audioPreview" controls class="w-full h-8 hidden"></audio>
 
-      <!-- লিখিত বিবরণ বক্স -->
+      <!-- বিবরণ বক্স -->
       <div>
         <label class="block text-[11px] font-bold text-slate-700 mb-1">অভিযোগের লিখিত বিবরণ <span class="text-red-500">*</span></label>
         <textarea id="writtenBox" rows="3" placeholder="ঘটনাস্থল, অভিযুক্তদের অপকর্ম বা সমস্যার সঠিক বিবরণ লিখুন..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500"></textarea>
@@ -293,7 +289,7 @@
         <input type="file" id="filesInput" multiple accept="image/*,video/*,audio/*,.pdf" onchange="onFileSelected(this)" class="hidden">
       </label>
 
-      <!-- পরিচয় গোপনীয়তা -->
+      <!-- গোপনীয়তা চেকবক্স -->
       <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
         <div class="flex items-center gap-2">
           <span class="text-base">🔒</span>
@@ -305,4 +301,18 @@
         <input type="checkbox" id="anonCheck" checked onchange="toggleNameInput(this.checked)" class="w-5 h-5 accent-blue-600 rounded">
       </div>
 
-      <div id="nameInputBl
+      <div id="nameInputBlock" class="hidden grid grid-cols-2 gap-2">
+        <input type="text" id="complainantName" placeholder="আপনার নাম" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+        <input type="tel" id="complainantPhone" placeholder="মোবাইল নম্বর" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <button type="button" onclick="submitFullReport()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 active:scale-[0.98] text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 transition">
+          <span>অফিসিয়াল দরখাস্ত ও PDF প্রস্তুত করুন</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ধাপ ৪: ট্র্যাকিং -->
+    <section class="bg-white rounded-3xl 
