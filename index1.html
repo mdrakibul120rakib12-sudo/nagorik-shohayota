@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>নাগরিক সহায়তা - স্বাধীন সামাজিক উদ্যোগ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .crime-card.active { border-color: #2563eb !important; background-color: #eff6ff !important; box-shadow: 0 4px 14px rgba(37,99,235,0.25); transform: scale(1.02); }
+    .crime-card * { pointer-events: none; }
+    .record-pulse { animation: recPulse 1.2s infinite; }
+    @keyframes recPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.6; } }
+    @media print {
+      body * { visibility: hidden; }
+      #printableApplication, #printableApplication * { visibility: visible; }
+      #printableApplication { position: absolute; left: 0; top: 0; width: 100%; display: block !important; padding: 25px; color: #000; background: #fff; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-800 min-h-screen pb-36">
+
+  <!-- জরুরি হটলাইন বার -->
+  <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 shadow-2xl">
+    <div class="max-w-md mx-auto">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-emerald-500/20">
+            ন
+          </div>
+          <div>
+            <h1 class="text-sm font-bold text-white tracking-wide">নাগরিক সহায়তা</h1>
+            <p class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> দুর্নীতিমুক্ত সমাজ গঠনে স্বাধীন নাগরিক উদ্যোগ
+            </p>
+          </div>
+        </div>
+        <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full">সামাজিক প্ল্যাটফর্ম</span>
+      </div>
+
+      <!-- ওয়ান-ট্যাপ ডায়াল -->
+      <div class="grid grid-cols-4 gap-2 text-center text-xs">
+        <a href="tel:999" class="bg-gradient-to-r from-red-600 to-rose-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-red-600/30 flex flex-col items-center">
+          <span class="text-xs">🚨 ৯৯৯</span>
+          <span class="text-[9px] text-red-100 font-normal">পুলিশ/অ্যাম্বুলেন্স</span>
+        </a>
+        <a href="tel:16163" class="bg-gradient-to-r from-orange-600 to-amber-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-orange-600/30 flex flex-col items-center">
+          <span class="text-xs">🔥 ১৬১৬৩</span>
+          <span class="text-[9px] text-orange-100 font-normal">ফায়ার সার্ভিস</span>
+        </a>
+        <a href="tel:109" class="bg-gradient-to-r from-fuchsia-600 to-pink-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-pink-600/30 flex flex-col items-center">
+          <span class="text-xs">🛡️ ১০৯</span>
+          <span class="text-[9px] text-pink-100 font-normal">নারী নিরাপত্তা</span>
+        </a>
+        <a href="tel:333" class="bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-blue-600/30 flex flex-col items-center">
+          <span class="text-xs">🏛️ ৩৩৩</span>
+          <span class="text-[9px] text-blue-100 font-normal">সরকারি সেবা</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-4 mt-4 space-y-5">
+
+    <!-- উদ্দেশ্য ও স্বচ্ছতা ব্যানার -->
+    <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl text-xs text-slate-300 space-y-1.5 shadow-md">
+      <div class="flex items-center gap-1.5 font-bold text-emerald-400">
+        <span>🌱</span> <span>আমাদের উদ্দেশ্য ও অবস্থান:</span>
+      </div>
+      <p class="text-[11px] text-slate-300 leading-relaxed">
+        এটি দেশ ও সমাজকে দুর্নীতিমুক্ত রাখতে এবং সাধারণ মানুষের সুবিধার্থে গড়ে তোলা একটি <strong>সম্পূর্ণ স্বাধীন ও অলাভজনক সামাজিক নাগরিক উদ্যোগ</strong>। অপরাধ দমন ও অধিকার রক্ষায় সাধারণ মানুষকে লিখিত আইনি দরখাস্ত প্রস্তুত করতে এবং উপযুক্ত প্রশাসনিক টেবিলে পৌঁছে দিতে এটি কাজ করে।
+      </p>
+    </div>
+
+    <!-- ধাপ ১: সমস্যার ধরন নির্বাচন -->
+    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ১</span>
+        <span class="text-xs text-slate-400">একটি বিষয় স্পর্শ করুন</span>
+      </div>
+      <h2 class="text-base font-bold text-slate-900">অভিযোগ বা সেবার বিষয় নির্বাচন করুন</h2>
+
+      <div class="grid grid-cols-2 gap-2.5 pt-1">
+        <button type="button" data-crime="drugs" onclick="selectCrime('drugs', this)" class="crime-card active flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg shrink-0">💊</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">মাদক ব্যবসা ও জুয়া</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মাদক স্পট, আড্ডা, কারবারি</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="harassment" onclick="selectCrime('harassment', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0">⚠️</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">যৌন হয়রানি ও ইভটিজিং</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">নিপীড়ন, রাস্তায় উত্যক্ত, যৌতুক</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="extortion" onclick="selectCrime('extortion', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg shrink-0">🔫</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">চাঁদাবাজি ও ছিনতাই</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">টাকা দাবি, সন্ত্রাসী দল, মাস্তানি</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="corruption" onclick="selectCrime('corruption', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg shrink-0">💰</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">ঘুষ ও অনিয়ম</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">প্রকল্পে আত্মসাৎ, ঘুষ দাবি</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="canal" onclick="selectCrime('canal', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-lg shrink-0">🌊</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">খাল ও জলাশয় দখল</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জলাবদ্ধতা, সরকারি জায়গা দখল</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="union_issue" onclick="selectCrime('union_issue', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0">🏛️</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">রাস্তা ও কালভার্ট ভাঙন</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মেরামত কাজ, ব্রিজের সমস্যা</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="dispute" onclick="selectCrime('dispute', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg shrink-0">📜</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">সীমানা বিরোধ ও সালিশ</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জমি বিরোধ, গ্রাম আদালত</p>
+          </div>
+        </button>
+
+        <button type="button" data-crime="fire" onclick="selectCrime('fire', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-300">
+          <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg shrink-0">🔥</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">অগ্নিকাণ্ড ও উদ্ধার</h3>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">আগুন, উদ্ধারকাজ, গ্যাস লিক</p>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- ধাপ ২: প্রশাসনিক এলাকা ও কাস্টম উপজেলা/ইউনিয়ন ইনপুট -->
+    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3.5">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ২</span>
+        <button type="button" onclick="detectGPS()" class="text-xs font-bold text-emerald-600 flex items-center gap-1 active:scale-95 bg-emerald-50 px-2.5 py-1 rounded-lg">
+          📍 জিপিএস পিন
+        </button>
+      </div>
+      <h2 class="text-base font-bold text-slate-900">এলাকা ও উপযুক্ত দপ্তর নির্বাচন</h2>
+
+      <div class="space-y-2.5">
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">বিভাগ <span class="text-red-500">*</span></label>
+            <select id="divSelect" onchange="onDivisionChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">-- বিভাগ --</option>
+              <option value="ঢাকা">ঢাকা বিভাগ</option>
+              <option value="চট্টগ্রাম">চট্টগ্রাম বিভাগ</option>
+              <option value="রাজশাহী">রাজশাহী বিভাগ</option>
+              <option value="খুলনা">খুলনা বিভাগ</option>
+              <option value="বরিশাল">বরিশাল বিভাগ</option>
+              <option value="সিলেট">সিলেট বিভাগ</option>
+              <option value="রংপুর">রংপুর বিভাগ</option>
+              <option value="ময়মনসিংহ">ময়মনসিংহ বিভাগ</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">জেলা <span class="text-red-500">*</span></label>
+            <select id="distSelect" onchange="onDistrictChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
+              <option value="">আগে বিভাগ বাছুন</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">উপজেলা / থানা <span class="text-red-500">*</span></label>
+            <select id="upazilaSelect" onchange="onUpazilaChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
+              <option value="">আগে জেলা বাছুন</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">ইউনিয়ন পরিষদ / পৌরসভা <span class="text-red-500">*</span></label>
+            <select id="unionSelect" onchange="onUnionChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
+              <option value="">আগে উপজেলা বাছুন</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- কাস্টম উপজেলা লেখার বক্স -->
+        <div id="customUpazilaBlock" class="hidden">
+          <label class="block text-[11px] font-bold text-blue-700 mb-1">আপনার উপজেলা/থানার সঠিক নামটি লিখুন:</label>
+          <input type="text" id="customUpazilaInput" oninput="updateRoutingResult()" placeholder="উদা: সোনারগাঁও বা বন্দর থানা" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+        </div>
+
+        <!-- কাস্টম ইউনিয়ন লেখার বক্স -->
+        <div id="customUnionBlock" class="hidden">
+          <label class="block text-[11px] font-bold text-blue-700 mb-1">আপনার ইউনিয়ন/পৌরসভার সঠিক নামটি লিখুন:</label>
+          <input type="text" id="customUnionInput" oninput="updateRoutingResult()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন বা ২ নং ওয়ার্ড" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+        </div>
+
+        <div id="wardBlock" class="hidden grid grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">ওয়ার্ড নম্বর</label>
+            <select id="wardSelect" onchange="updateRoutingResult()" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="all" selected>সমগ্র এলাকা</option>
+              <option value="১">১ নং ওয়ার্ড</option>
+              <option value="২">২ নং ওয়ার্ড</option>
+              <option value="৩">৩ নং ওয়ার্ড</option>
+              <option value="৪">৪ নং ওয়ার্ড</option>
+              <option value="৫">৫ নং ওয়ার্ড</option>
+              <option value="৬">৬ নং ওয়ার্ড</option>
+              <option value="৭">৭ নং ওয়ার্ড</option>
+              <option value="৮">৮ নং ওয়ার্ড</option>
+              <option value="৯">৯ নং ওয়ার্ড</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">গ্রাম / পাড়া / মোড়</label>
+            <input type="text" id="villageInput" placeholder="উদা: পশ্চিম পাড়া" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+
+        <!-- উপযুক্ত রিসিভার কার্ড -->
+        <div id="autoRouteCard" class="hidden p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 to-blue-950 text-white space-y-2">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+            <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">🎯 উপযুক্ত প্রশাসনিক প্রাপক</span>
+            <span class="text-[9px] bg-emerald-900/80 text-emerald-200 px-2 py-0.5 rounded-full border border-emerald-700">সরাসরি অ্যাকশন সেল</span>
+          </div>
+          <div>
+            <p id="routeOfficeText" class="text-xs font-bold text-amber-300 leading-snug"></p>
+            <p id="routeChannelText" class="text-[10px] text-slate-300 mt-0.5"></p>
+          </div>
+          <div class="bg-blue-900/40 p-2 rounded-xl border border-blue-700/50 text-[10px] text-blue-100 flex items-start gap-1.5">
+            <span>⚖️</span>
+            <span id="routeReasonText">এই অপরাধ দমনে স্থানীয় প্রভাবমুক্ত রাখতে সরাসরি উপযুক্ত প্রশাসনিক ও পুলিশি কর্তৃপক্ষের আইনি এখতিয়ার কার্যকর।</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ধাপ ৩: লিখিত অভিযোগ ও প্রমাণাদি -->
+    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ৩</span>
+        <span class="text-xs text-slate-400">মৌখিক বা ফাইল প্রমাণ</span>
+      </div>
+      <h2 class="text-base font-bold text-slate-900">লিখিত অভিযোগ ও প্রমাণ</h2>
+
+      <!-- মৌখিক অডিও রেকর্ডার -->
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50/40 p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button type="button" id="micBtn" onclick="toggleAudio()" class="w-11 h-11 rounded-2xl bg-white shadow-md border border-slate-200 flex items-center justify-center text-lg active:scale-90 transition">
+            <span id="micIcon">🎙️</span>
+          </button>
+          <div>
+            <p id="micStatus" class="text-xs font-bold text-slate-800">মুখে বলে অভিযোগ রেকর্ড</p>
+            <p id="micTimer" class="text-[10px] font-mono text-slate-500">০০:০০ (ট্যাপ করে শুরু করুন)</p>
+          </div>
+        </div>
+        <span id="audioBadge" class="hidden text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-lg">অডিও যুক্ত ✓</span>
+      </div>
+      <audio id="audioPreview" controls class="w-full h-8 hidden"></audio>
+
+      <!-- লিখিত বিবরণ বক্স -->
+      <div>
+        <label class="block text-[11px] font-bold text-slate-700 mb-1">অভিযোগের লিখিত বিবরণ <span class="text-red-500">*</span></label>
+        <textarea id="writtenBox" rows="3" placeholder="ঘটনাস্থল, অভিযুক্তদের অপকর্ম বা সমস্যার সঠিক বিবরণ লিখুন..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+
+      <!-- ফাইল আপলোড -->
+      <label class="border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-2xl p-3 flex flex-col items-center justify-center cursor-pointer bg-slate-50 text-center transition">
+        <span class="text-xl">📁</span>
+        <span class="text-xs font-bold text-slate-700 mt-1">ছবি বা প্রমাণের ডকুমেন্ট যুক্ত করুন</span>
+        <span id="fileStatus" class="text-[10px] text-slate-400">কোনো ফাইল নির্বাচিত হয়নি</span>
+        <input type="file" id="filesInput" multiple accept="image/*,video/*,audio/*,.pdf" onchange="onFileSelected(this)" class="hidden">
+      </label>
+
+      <!-- পরিচয় গোপনীয়তা -->
+      <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🔒</span>
+          <div>
+            <p class="text-xs font-bold text-slate-800">পরিচয় সম্পূর্ণ গোপন রাখুন</p>
+            <p class="text-[10px] text-slate-500">দপ্তরের ফাইলে আপনার নাম ও নম্বর থাকবে না</p>
+          </div>
+        </div>
+        <input type="checkbox" id="anonCheck" checked onchange="toggleNameInput(this.checked)" class="w-5 h-5 accent-blue-600 rounded">
+      </div>
+
+      <div id="nameInputBlock" class="hidden grid grid-cols-2 gap-2">
+        <input type="text" id="complainantName" placeholder="আপনার নাম" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+        <input type="tel" id="complainantPhone" placeholder="মোবাইল নম্বর" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <button type="button" onclick="submitFullReport()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 active:scale-[0.98] text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 transition">
+          <span>অফিসিয়াল দরখাস্ত ও PDF প্রস্তুত করুন</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ধাপ ৪: অগ্রগতি যাচাই ও ট্র্যাকিং -->
+    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
+      <h2 class="text-base font-bold text-slate-900">অভিযোগের বর্তমান অবস্থা যাচাই</h2>
+      <div class="flex gap-2">
+        <input type="text" id="trackInput" placeholder="স্মারক নং (উদা: না-স/২০২৬/সোনারগাঁও/৮৪৯২০)" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono-code uppercase outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="button" onclick="checkStatus()" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold active:scale-95">খুঁজুন</button>
+      </div>
+
+      <div id="trackResultBox" class="hidden pt-3 border-t border-slate-100 space-y-2 text-xs">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-slate-500">স্মারক: <strong id="resCode" class="text-blue-600 font-mono-code text-[11px]"></strong></span>
+          <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px]" id="resBadge">দপ্তরে সক্রিয়</span>
+        </div>
+        <p><strong>প্রেরিত দপ্তর:</strong> <span id="resDept"></span></p>
+        <p><strong>অবস্থান:</strong> <span id="resLoc"></span></p>
+        <div class="p-2.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-200">
+          <strong>সর্বশেষ আপডেট:</strong> দরখাস্তটি তৈরি ও নথিভুক্ত হয়েছে। সংশ্লিষ্ট দপ্তরে দাখিলের প্রক্রিয়া চলমান রয়েছে।
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- সামাজিক উদ্যোগের ফুটার ক্রেডিট -->
+  <footer class="max-w-md mx-auto px-4 mt-6 text-center text-xs text-slate-400 space-y-2">
+    <div class="p-4 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl backdrop-blur-md">
+      <p class="text-emerald-400 font-bold text-sm">
+        নাগরিক সহায়তা পোর্টাল (Nagorik Shohayota)
+      </p>
+      
+      <p class="text-[11px] text-slate-300 mt-1">
+        দুর্নীতি প্রতিরোধ ও জনস্বার্থে পরিচালিত একটি স্বাধীন নাগরিক সামাজিক উদ্যোগ
+      </p>
+
+      <p class="text-[10px] text-slate-500 mt-1">
+        (এটি কোনো সরকারি অনুমোদিত প্ল্যাটফর্ম নয়, নাগরিকদের সহায়তা ও আবেদন প্রক্রিয়াকরণের জন্য তৈরি)
+      </p>
+      
+      <div class="pt-2.5 mt-2.5 border-t border-slate-800/80 flex items-center justify-center text-[11px] text-slate-500">
+        <span>ভার্সন: ৩.৮.০ | সম্পূর্ণ অলাভজনক ও স্বাধীন উদ্যোগ</span>
+      </div>
+    </div>
+    <p class="text-[10px] text-slate-600">© ২০২৬ নাগরিক সহায়তা পোর্টাল। জনস্বার্থে উন্মুক্ত।</p>
+  </footer>
+
+  <!-- দরখাস্ত, PDF ও সরাসরি শেয়ার মডাল -->
+  <div id="letterModal" class="fixed inset-0 bg-slate-950/80 hidden items-center justify-center p-3 z-50 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 space-y-4 shadow-2xl max-h-[92vh] flex flex-col">
+      <div class="flex justify-between items-center border-b pb-2">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">লিখিত দরখাস্ত প্রস্তুত</h3>
+          <p class="text-[10px] text-emerald-600 font-semibold">✓ নাগরিক স্মারক ও কাঠামোভুক্ত আবেদন</p>
+        </div>
+        <button type="button" onclick="closeModal('letterModal')" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+      </div>
+
+      <!-- দরখাস্ত প্যাড -->
+      <div id="printableApplication" class="bg-slate-50 border border-slate-300 p-4 rounded-xl text-xs leading-relaxed space-y-3 overflow-y-auto text-slate-800">
+        <div class="border-b-2 border-slate-800 pb-2 text-center space-y-0.5">
+          <p class="font-bold text-slate-900 text-sm">নাগরিক সহায়তা প্ল্যাটফর্ম (Nagorik Shohayota)</p>
+          <p class="text-[10px] text-blue-800 font-bold">দুর্নীতিমুক্ত সমাজ ও জনস্বার্থে একটি স্বাধীন নাগরিক সামাজিক উদ্যোগ</p>
+          <p class="text-[9px] text-slate-500">ওয়েবসাইট: nagorikhelp24.tiiny.site</p>
+        </div>
+
+        <div class="flex justify-between border-b pb-1 text-[11px]">
+          <span class="font-mono-code font-bold text-blue-700" id="docTrackId"></span>
+          <span class="text-slate-600 font-mono-code" id="docDate"></span>
+        </div>
+        
+        <div>
+          <p><strong>বরাবর,</strong></p>
+          <p id="docTarget" class="font-bold text-slate-900 text-[13px]"></p>
+          <p id="docOfficeLoc" class="text-slate-700"></p>
+        </div>
+
+        <p><strong>বিষয়: <span id="docSubject" class="underline"></span> প্রসঙ্গে।</strong></p>
+
+        <p>মহোদয়,</p>
+        <p>যথাবিহীত সম্মান প্রদর্শনপূর্বক বিনীত নিবেদন এই যে, আমি নিম্নবর্ণিত এলাকার একজন নাগরিক। <strong>নাগরিক সহায়তা সামাজিক প্ল্যাটফর্মের</strong> মাধ্যমে আমি আমাদের এলাকার নিম্নলিখিত গুরুতর সমস্যার প্রতিকার ও আপনার নিরপেক্ষ তদন্তপূর্বক দ্রুততম আইনানুগ হস্তক্ষেপ প্রার্থনা করছি:</p>
+
+        <div class="bg-white p-2.5 rounded border border-slate-200 space-y-1">
+          <p><strong>ঘটনাস্থল:</strong> <span id="docPlace"></span></p>
+          <p><strong>অভিযোগের বিস্তারিত বিবরণ:</strong></p>
+          <p id="docDetails" class="italic text-slate-700 whitespace-pre-line"></p>
+        </div>
+
+        <p>অতএব, মহোদয়ের নিকট আকুল প্রার্থনা, উক্ত বিষয়টি সরেজমিনে নিরপেক্ষভাবে তদন্তপূর্বক নাগরিক নিরাপত্তা, জনস্বার্থ ও সামাজিক শৃঙ্খলা রক্ষায় দ্রুত প্রয়োজনীয় কার্যকর ব্যবস্থা গ্রহণে আপনার সদয় মর্জি হয়।</p>
+
+        <div class="pt-3 border-t border-slate-200">
+          <p>বিনীত নিবেদক,</p>
+          <p id="docSigner" class="font-bold text-slate-900"></p>
+          <p class="text-[9px] text-slate-400 mt-1">[এটি নাগরিক সহায়তা সামাজিক পোর্টাল থেকে প্রস্তুতকৃত একটি আবেদনপত্র]</p>
+        </div>
+      </div>
+
+      <!-- নির্দেশনা -->
+      <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-xl text-[11px] text-blue-900 space-y-1">
+        <p class="font-bold flex items-center gap-1"><span>📌</span> দ্রুত প্রেরণের উপায়:</p>
+        <p>১. <strong>PDF ডাউনলোড</strong> করে মোবাইলে সংরক্ষণ করুন বা প্রিন্ট নিন।</p>
+        <p>২. ইউপি চেয়ারম্যান বা মেম্বারদের কাছে পাঠাতে <strong>হোয়াটসঅ্যাপ</strong> বাটন চাপুন।</p>
+        <p>৩. ইউএনও বা প্রশাসনের কাছে পাঠাতে <strong>জিমেইল</strong> বাটন চাপুন।</p>
+      </div>
+
+      <!-- অ্যাকশন বাটনসমূহ (PDF, ইমেইল ও হোয়াটসঅ্যাপ) -->
+      <div class="grid grid-cols-3 gap-1.5 pt-1">
+        <button type="button" onclick="downloadNativePDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1 shadow">
+          <span>📥 PDF</span>
+        </button>
+        <button type="button" onclick="shareViaWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1 shadow">
+          <span>💬 হোয়াটসঅ্যাপ</span>
+        </button>
+        <a id="emailDispatchBtn" href="#" class="bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1 shadow text-center">
+          <span>✉️ জিমেইল</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bangladeshGeoData = {
+      "ঢাকা": {
+        "নারায়ণগঞ্জ": { upazilas: { "সোনারগাঁও": ["শম্ভুপুরা ইউনিয়ন", "মোগরাপাড়া ইউনিয়ন", "বারদী ইউনিয়ন", "পিরোজপুর ইউনিয়ন"], "আড়াইহাজার": ["উচিৎপুর ইউনিয়ন", "মাহমুদপুর ইউনিয়ন", "দুপ্তারা ইউনিয়ন"], "রূপগঞ্জ": ["কায়েতপাড়া ইউনিয়ন", "ভুলতা ইউনিয়ন", "গোলাকান্দাইল ইউনিয়ন"], "বন্দর": ["কলাগাছিয়া ইউনিয়ন", "বন্দর ইউনিয়ন", "মদনপুর ইউনিয়ন"], "নারায়ণগঞ্জ সদর": ["বক্তাবলী ইউনিয়ন", "এনায়েতনগর ইউনিয়ন", "কাশীপুর ইউনিয়ন"] }, fire: "নারায়ণগঞ্জ সদর ও মণ্ডলপাড়া ফায়ার সার্ভিস" },
+        "ঢাকা": { upazilas: { "সাভার": ["শিমুলিয়া ইউনিয়ন", "ধামসোনা ইউনিয়ন", "বিরুলিয়া ইউনিয়ন"], "কেরানীগঞ্জ": ["হযরতপুর ইউনিয়ন", "কলাতিয়া ইউনিয়ন", "জিনজিরা ইউনিয়ন"], "ধামরাই": ["আমতা ইউনিয়ন", "কুশুরা ইউনিয়ন"] }, fire: "সিদ্দিকবাজার ফায়ার সার্ভিস সদর দফতর" },
+        "গাজীপুর": { upazilas: { "শ্রীপুর": ["মাওনা ইউনিয়ন", "তেলিহাটি ইউনিয়ন"], "কালিয়াকৈর": ["ফুলবাড়িয়া ইউনিয়ন", "চাপাইর ইউনিয়ন"], "কাপাসিয়া": ["কাপাসিয়া ইউনিয়ন", "তরগাঁও ইউনিয়ন"] }, fire: "গাজীপুর জেলা ফায়ার স্টেশন" },
+        "মুন্সীগঞ্জ": { upazilas: { "সিরাজদিখান": ["মালখানগর ইউনিয়ন", "ইছাপুরা ইউনিয়ন"], "লৌহজং": ["মেদিনীমণ্ডল ইউনিয়ন", "কনকসার ইউনিয়ন"] }, fire: "মুন্সীগঞ্জ ফায়ার স্টেশন" },
+        "নরসিংদী": { upazilas: { "নরসিংদী সদর": ["চিনিশপুর ইউনিয়ন", "শিলমান্দী ইউনিয়ন"], "রায়পুরা": ["আমিরগঞ্জ ইউনিয়ন", "মহেশপুর ইউনিয়ন"] }, fire: "নরসিংদী ফায়ার স্টেশন" },
+        "মানিকগঞ্জ": { upazilas: { "মানিকগঞ্জ সদর": ["দিঘী ইউনিয়ন", "কৃষ্ণপুর ইউনিয়ন"], "সিংগাইর": ["সায়েস্তা ইউনিয়ন", "ধল্লা ইউনিয়ন"] }, fire: "মানিকগঞ্জ ফায়ার স্টেশন" },
+        "ফরিদপুর": { upazilas: { "ফরিদপুর সদর": ["কানাইপুর ইউনিয়ন"], "ভাঙ্গা": ["কালামৃধা ইউনিয়ন"] }, fire: "ফরিদপুর ফায়ার স্টেশন" },
+        "মাদারীপুর": { upazilas: { "মাদারীপুর সদর": ["মস্তফাপুর ইউনিয়ন"], "শিবচর": ["উমেদপুর ইউনিয়ন"] }, fire: "মাদারীপুর ফায়ার স্টেশন" },
+        "শরীয়তপুর": { upazilas: { "শরীয়তপুর সদর": ["আংগারিয়া ইউনিয়ন"], "জাজিরা": ["বিলাসপুর ইউনিয়ন"] }, fire: "শরীয়তপুর ফায়ার স্টেশন" },
+        "গোপালগঞ্জ": { upazilas: { "গোপালগঞ্জ সদর": ["হরিদাসপুর ইউনিয়ন"], "টুঙ্গিপাড়া": ["পাটগাতী ইউনিয়ন"] }, fire: "গোপালগঞ্জ ফায়ার স্টেশন" },
+        "রাজবাড়ী": { upazilas: { "রাজবাড়ী সদর": ["খানখানাপুর ইউনিয়ন"], "পাংশা": ["যশোড়া ইউনিয়ন"] }, fire: "রাজবাড়ী ফায়ার স্টেশন" },
+        "কিশোরগঞ্জ": { upazilas: { "কিশোরগঞ্জ সদর": ["যশোদল ইউনিয়ন"], "ভৈরব": ["সাদেকপুর ইউনিয়ন"] }, fire: "ভৈরব ও কিশোরগঞ্জ ফায়ার স্টেশন" },
+        "টাঙ্গাইল": { upazilas: { "টাঙ্গাইল সদর": ["করটিয়া ইউনিয়ন"], "মির্জাপুর": ["জামুর্কী ইউনিয়ন"] }, fire: "টাঙ্গাইল ফায়ার স্টেশন" }
+      },
+      "চট্টগ্রাম": {
+        "চট্টগ্রাম": { upazilas: { "সীতাকুণ্ড": ["সৈয়দপুর ইউনিয়ন", "কুমিরা ইউনিয়ন"], "মিরসরাই": ["জোরারগঞ্জ ইউনিয়ন"], "হাটহাজারী": ["ধলই ইউনিয়ন"] }, fire: "আগ্রাবাদ ফায়ার সার্ভিস হেডকোয়ার্টার" },
+        "কক্সবাজার": { upazilas: { "কক্সবাজার সদর": ["ঝিলংজা ইউনিয়ন"], "উখিয়া": ["রাজাপালং ইউনিয়ন"], "টেকনাফ": ["বাহারছড়া ইউনিয়ন"] }, fire: "কক্সবাজার ফায়ার স্টেশন" },
+        "কুমিল্লা": { upazilas: { "দাউদকান্দি": ["মারুকা ইউনিয়ন"], "চান্দিনা": ["মাধাইয়া ইউনিয়ন"] }, fire: "কুমিল্লা ফায়ার স্টেশন" },
+        "ফেনী": { upazilas: { "ফেনী সদর": ["ফরহাদনগর ইউনিয়ন"], "সোনাগাজী": ["চরদরবেশ ইউনিয়ন"] }, fire: "ফেনী ফায়ার স্টেশন" },
+        "ব্রাহ্মণবাড়িয়া": { upazilas: { "ব্রাহ্মণবাড়িয়া সদর": ["সুহিলপুর ইউনিয়ন"], "আশুগঞ্জ": ["চরচারতলা ইউনিয়ন"] }, fire: "ব্রাহ্মণবাড়িয়া ফায়ার স্টেশন" },
+        "নোয়াখালী": { upazilas: { "নোয়াখালী সদর": ["দাদপুর ইউনিয়ন"], "বেগমগঞ্জ": ["রাজগঞ্জ ইউনিয়ন"] }, fire: "মাইজদী ফায়ার স্টেশন" },
+        "চাঁদপুর": { upazilas: { "চাঁদপুর সদর": ["বিষ্ণুপুর ইউনিয়ন"], "হাজীগঞ্জ": ["কালচোঁ ইউনিয়ন"] }, fire: "চাঁদপুর ফায়ার স্টেশন" },
+        "লক্ষ্মীপুর": { upazilas: { "লক্ষ্মীপুর সদর": ["উত্তর হামছাদী ইউনিয়ন"], "রামগঞ্জ": ["কাঞ্চনপুর ইউনিয়ন"] }, fire: "লক্ষ্মীপুর ফায়ার স্টেশন" },
+        "রাঙ্গামাটি": { upazilas: { "রাঙ্গামাটি সদর": ["জীবতলী ইউনিয়ন"], "কাপ্তাই": ["চন্দ্রঘোনা ইউনিয়ন"] }, fire: "রাঙ্গামাটি ফায়ার স্টেশন" },
+        "বান্দরবান": { upazilas: { "বান্দরবান সদর": ["রাজবিলা ইউনিয়ন"], "রুমা": ["পাইন্দু ইউনিয়ন"] }, fire: "বান্দরবান ফায়ার স্টেশন" },
+        "খাগড়াছড়ি": { upazilas: { "খাগড়াছড়ি সদর": ["পৌরসভা এলাকা"], "দীঘিনালা": ["মেরুং ইউনিয়ন"] }, fire: "খাগড়াছড়ি ফায়ার স্টেশন" }
+      },
+      "রাজশাহী": {
+        "রাজশাহী": { upazilas: { "পবা": ["হরিপুর ইউনিয়ন", "হড়গ্রাম ইউনিয়ন"], "গোদাগাড়ী": ["গোগ্রাম ইউনিয়ন"] }, fire: "রাজশাহী বিভাগীয় সদর ফায়ার স্টেশন" },
+        "বগুড়া": { upazilas: { "শেরপুর": ["কুসুম্বী ইউনিয়ন"], "শিবগঞ্জ": ["কীচক ইউনিয়ন"] }, fire: "বগুড়া ফায়ার স্টেশন" },
+        "পাবনা": { upazilas: { "পাবনা সদর": ["দোগাছী ইউনিয়ন"], "ঈশ্বরদী": ["পাকশী ইউনিয়ন"] }, fire: "পাবনা ফায়ার স্টেশন" },
+        "সিরাজগঞ্জ": { upazilas: { "সিরাজগঞ্জ সদর": ["রতনকান্দি ইউনিয়ন"], "শাহজাদপুর": ["কায়েমপুর ইউনিয়ন"] }, fire: "সিরাজগঞ্জ ফায়ার স্টেশন" },
+        "নওগাঁ": { upazilas: { "নওগাঁ সদর": ["হাপানিয়া ইউনিয়ন"], "পত্নীতলা": ["নজিপুর ইউনিয়ন"] }, fire: "নওগাঁ ফায়ার স্টেশন" },
+        "নাটোর": { upazilas: { "নাটোর সদর": ["ছাতনী ইউনিয়ন"], "সিংড়া": ["সুকাশ ইউনিয়ন"] }, fire: "নাটোর ফায়ার স্টেশন" },
+        "চাঁপাইনবাবগঞ্জ": { upazilas: { "চাঁপাইনবাবগঞ্জ সদর": ["বারঘরিয়া ইউনিয়ন"], "শিবগঞ্জ": ["বিনোদপুর ইউনিয়ন"] }, fire: "চাঁপাইনবাবগঞ্জ ফায়ার স্টেশন" },
+        "জয়পুরহাট": { upazilas: { "জয়পুরহাট সদর": ["দোগাছী ইউনিয়ন"], "পাঁচবিবি": ["বাগজানা ইউনিয়ন"] }, fire: "জয়পুরহাট ফায়ার স্টেশন" }
+      },
+      "খুলনা": {
+        "খুলনা": { upazilas: { "ডুমুরিয়া": ["ডুমুরিয়া ইউনিয়ন"], "রূপসা": ["আইচগাতী ইউনিয়ন"] }, fire: "বয়রা ফায়ার স্টেশন, খুলনা" },
+        "যশোর": { upazilas: { "ঝিকরগাছা": ["গঙ্গানন্দপুর ইউনিয়ন"], "শার্শা": ["বেনাপোল ইউনিয়ন"] }, fire: "যশোর ফায়ার স্টেশন" },
+        "কুষ্টিয়া": { upazilas: { "কুষ্টিয়া সদর": ["ঝাউদিয়া ইউনিয়ন"], "কুমারখালী": ["শিলাইদহ ইউনিয়ন"] }, fire: "কুষ্টিয়া ফায়ার স্টেশন" },
+        "সাতক্ষীরা": { upazilas: { "সাতক্ষীরা সদর": ["আলিপুর ইউনিয়ন"], "কালীগঞ্জ": ["কুশুলিয়া ইউনিয়ন"] }, fire: "সাতক্ষীরা ফায়ার স্টেশন" },
+        "ঝিনাইদহ": { upazilas: { "ঝিনাইদহ সদর": ["সাধুহাটী ইউনিয়ন"], "কালীগঞ্জ": ["বারোবাজার ইউনিয়ন"] }, fire: "ঝিনাইদহ ফায়ার স্টেশন" },
+        "বাগেরহাট": { upazilas: { "বাগেরহাট সদর": ["কাড়াপাড়া ইউনিয়ন"], "মোংলা": ["বুড়িরডাঙ্গা ইউনিয়ন"] }, fire: "বাগেরহাট ফায়ার স্টেশন" },
+        "চুয়াডাঙ্গা": { upazilas: { "চুয়াডাঙ্গা সদর": ["আলুকদিয়া ইউনিয়ন"], "আলমডাঙ্গা": ["ভালাইপুর ইউনিয়ন"] }, fire: "চুয়াডাঙ্গা ফায়ার স্টেশন" },
+        "মেহেরপুর": { upazilas: { "মেহেরপুর সদর": ["কুতুবপুর ইউনিয়ন"], "মুজিবনগর": ["বাগোয়ান ইউনিয়ন"] }, fire: "মেহেরপুর ফায়ার স্টেশন" },
+        "নড়াইল": { upazilas: { "নড়াইল সদর": ["মাইজপাড়া ইউনিয়ন"], "লোহাগড়া": ["দিঘলিয়া ইউনিয়ন"] }, fire: "নড়াইল ফায়ার স্টেশন" },
+        "মাগুরা": { upazilas: { "মাগুরা সদর": ["মঘী ইউনিয়ন"], "শ্রীপুর": ["গয়েশপুর ইউনিয়ন"] }, fire: "মাগুরা ফায়ার স্টেশন" }
+      },
+      "বরিশাল": {
+        "বরিশাল": { upazilas: { "বাবুগঞ্জ": ["কেদারপুর ইউনিয়ন"], "বাকেরগঞ্জ": ["দুধল ইউনিয়ন"] }, fire: "বরিশাল সদর ফায়ার স্টেশন" },
+        "পটুয়াখালী": { upazilas: { "পটুয়াখালী সদর": ["মাদারবুনিয়া ইউনিয়ন"], "কলাপাড়া": ["কুয়াকাটা ইউনিয়ন"] }, fire: "পটুয়াখালী ফায়ার স্টেশন" },
+        "ভোলা": { upazilas: { "ভোলা সদর": ["ইলিশা ইউনিয়ন"], "চরফ্যাশন": ["দুলারহাট ইউনিয়ন"] }, fire: "ভোলা ফায়ার স্টেশন" },
+        "পিরোজপুর": { upazilas: { "পিরোজপুর সদর": ["কদমতলা ইউনিয়ন"], "মঠবাড়িয়া": ["তুষখালী ইউনিয়ন"] }, fire: "পিরোজপুর ফায়ার স্টেশন" },
+        "বরগুনা": { upazilas: { "বরগুনা সদর": ["বদরখালী ইউনিয়ন"], "আমতলী": ["গুলিশাখালী ইউনিয়ন"] }, fire: "বরগুনা ফায়ার স্টেশন" },
+        "ঝালকাঠি": { upazilas: { "ঝালকাঠি সদর": ["গাবখান ধানসিঁড়ি ইউনিয়ন"], "নলছিটি": ["দপদপিয়া ইউনিয়ন"] }, fire: "ঝালকাঠি ফায়ার স্টেশন" }
+      },
+      "সিলেট": {
+        "সিলেট": { upazilas: { "গোলাপগঞ্জ": ["গোলাপগঞ্জ ইউনিয়ন"], "বিয়ানীবাজার": ["আলীনগর ইউনিয়ন"] }, fire: "তালতলা ফায়ার স্টেশন, সিলেট" },
+        "মৌলভীবাজার": { upazilas: { "মৌলভীবাজার সদর": ["খলিলপুর ইউনিয়ন"], "শ্রীমঙ্গল": ["কালাপুর ইউনিয়ন"] }, fire: "মৌলভীবাজার ফায়ার স্টেশন" },
+        "হবিগঞ্জ": { upazilas: { "হবিগঞ্জ সদর": ["লোকড়া ইউনিয়ন"], "মাধবপুর": ["আন্দিউড়া ইউনিয়ন"] }, fire: "হবিগঞ্জ ফায়ার স্টেশন" },
+        "সুনামগঞ্জ": { upazilas: { "সুনামগঞ্জ সদর": ["জাহাঙ্গীরনগর ইউনিয়ন"], "ছাতক": ["জাউয়াবাজার ইউনিয়ন"] }, fire: "সুনামগঞ্জ ফায়ার স্টেশন" }
+      },
+      "রংপুর": {
+        "রংপুর": { upazilas: { "পীরগঞ্জ": ["চৈত্রকোল ইউনিয়ন"], "মিঠাপুকুর": ["ইমাদপুর ইউনিয়ন"] }, fire: "রংপুর স্টেশন সদর" },
+        "দিনাজপুর": { upazilas: { "দিনাজপুর সদর": ["চেহেলগাজী ইউনিয়ন"], "পার্বতীপুর": ["মনমথপুর ইউনিয়ন"] }, fire: "দিনাজপুর ফায়ার স্টেশন" },
+        "গাইবান্ধা": { upazilas: { "গাইবান্ধা সদর": ["বোয়ালী ইউনিয়ন"], "গোবিন্দগঞ্জ": ["কামারদহ ইউনিয়ন"] }, fire: "গাইবান্ধা ফায়ার স্টেশন" },
+        "কুড়িগ্রাম": { upazilas: { "কুড়িগ্রাম সদর": ["যাত্রাপুর ইউনিয়ন"], "উলিপুর": ["হাতিয়া ইউনিয়ন"] }, fire: "কুড়িগ্রাম ফায়ার স্টেশন" },
+        "নীলফামারী": { upazilas: { "নীলফামারী সদর": ["চওড়া বড়গাছা ইউনিয়ন"], "সৈয়দপুর": ["বোতলাগাড়ী ইউনিয়ন"] }, fire: "নীলফামারী ফায়ার স্টেশন" },
+        "লালমনিরহাট": { upazilas: { "লালমনিরহাট সদর": ["মোগলহাট ইউনিয়ন"], "পাটগ্রাম": ["বাউরা ইউনিয়ন"] }, fire: "লালমনিরহাট ফায়ার স্টেশন" },
+        "ঠাকুরগাঁও": { upazilas: { "ঠাকুরগাঁও সদর": ["রুহিয়া ইউনিয়ন"], "পীরগঞ্জ": ["ভোমরাদহ ইউনিয়ন"] }, fire: "ঠাকুরগাঁও ফায়ার স্টেশন" },
+        "পঞ্চগড়": { upazilas: { "পঞ্চগড় সদর": ["অমরখানা ইউনিয়ন"], "তেঁতুলিয়া": ["বাংলাবান্ধা ইউনিয়ন"] }, fire: "পঞ্চগড় ফায়ার স্টেশন" }
+      },
+      "ময়মনসিংহ": {
+        "ময়মনসিংহ": { upazilas: { "ত্রিশাল": ["ধানীখোলা ইউনিয়ন"], "মুক্তাগাছা": ["দুল্লা ইউনিয়ন"] }, fire: "ময়মনসিংহ বিভাগীয় ফায়ার স্টেশন" },
+        "জামালপুর": { upazilas: { "জামালপুর সদর": ["কেন্দুয়া ইউনিয়ন"], "মেলান্দহ": ["কুলিয়া ইউনিয়ন"] }, fire: "জামালপুর ফায়ার স্টেশন" },
+        "নেত্রকোণা": { upazilas: { "নেত্রকোণা সদর": ["মৌগাতী ইউনিয়ন"], "দুর্গাপুর": ["কুল্লাগড়া ইউনিয়ন"] }, fire: "নেত্রকোণা ফায়ার স্টেশন" },
+        "শেরপুর": { upazilas: { "শেরপুর সদর": ["কামারিয়া ইউনিয়ন"], "নালিতাবাড়ী": ["কাকোরকান্দি ইউনিয়ন"] }, fire: "শেরপুর ফায়ার স্টেশন" }
+      }
+    };
+
+    let selectedCrimeKey = 'drugs';
+    let storedComplaints = {};
+
+    function selectCrime(key, el) {
+      selectedCrimeKey = key;
+      document.querySelectorAll('.crime-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      updateRoutingResult();
+    }
+
+    function onDivisionChange() {
+      const div = document.getElementById('divSelect').value;
+      const distSelect = document.getElementById('distSelect');
+      const upazilaSelect = document.getElementById('upazilaSelect');
+      const unionSelect = document.getElementById('unionSelect');
+
+      distSelect.innerHTML = '<option value="">-- জেলা বাছুন --</option>';
+      upazilaSelect.innerHTML = '<option value="">আগে জেলা বাছুন</option>';
+      unionSelect.innerHTML = '<option value="">আগে উপজেলা বাছুন</option>';
+
+      distSelect.disabled = true;
+      upazilaSelect.disabled = true;
+      unionSelect.disabled = true;
+      document.getElementById('wardBlock').classList.add('hidden');
+      document.getElementById('customUpazilaBlock').classList.add('hidden');
+      document.getElementById('customUnionBlock').classList.add('hidden');
+      document.getElementById('autoRouteCard').classList.add('hidden');
+
+      if (div && bangladeshGeoData[div]) {
+        distSelect.disabled = false;
+        Object.keys(bangladeshGeoData[div]).forEach(dist => {
+          const opt = document.createElement('option');
+          opt.value = dist;
+          opt.innerText = dist;
+          distSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function onDistrictChange() {
+      const div = document.getElementById('divSelect').value;
+      const dist = document.getElementById('distSelect').value;
+      const upazilaSelect = document.getElementById('upazilaSelect');
+      const unionSelect = document.getElementById('unionSelect');
+
+      upazilaSelect.innerHTML = '<option value="">-- উপজেলা / থানা বাছুন --</option>';
+      unionSelect.innerHTML = '<option value="">আগে উপজেলা বাছুন</option>';
+      unionSelect.disabled = true;
+      document.getElementById('customUpazilaBlock').classList.add('hidden');
+
+      if (div && dist && bangladeshGeoData[div][dist]) {
+        upazilaSelect.disabled = false;
+        Object.keys(bangladeshGeoData[div][dist].upazilas).forEach(upz => {
+          const opt = document.createElement('option');
+          opt.value = upz;
+          opt.innerText = upz;
+          upazilaSelect.appendChild(opt);
+        });
+        // তালিকায় না থাকলে কাস্টম লেখার অপশন
+        const otherOpt = document.createElement('option');
+        otherOpt.value = "custom_upazila";
+        otherOpt.innerText = "✍️ আমার উপজেলা তালিকায় নেই (নিজে লিখুন)";
+        upazilaSelect.appendChild(otherOpt);
+      } else {
+        upazilaSelect.disabled = true;
+      }
+      updateRoutingResult();
+    }
+
+    function onUpazilaChange() {
+      const div = document.getElementById('divSelect').value;
+      const dist = document.getElementById('distSelect').value;
+      const upz = document.getElementById('upazilaSelect').value;
+      const unionSelect = document.getElementById('unionSelect');
+      const customUpzBlock = document.getElementById('customUpazilaBlock');
+
+      unionSelect.innerHTML = '<option value="">-- ইউনিয়ন পরিষদ বাছুন --</option>';
+
+      if (upz === "custom_upazila") {
+        customUpzBlock.classList.remove('hidden');
+        unionSelect.disabled = false;
+        const otherOpt = document.createElement('option');
+        otherOpt.value = "custom";
+        otherOpt.innerText = "✍️ ইউনিয়ন পরিষদ নিজে লিখুন";
+        unionSelect.appendChild(otherOpt);
+      } else if (div && dist && upz && bangladeshGeoData[div][dist].upazilas[upz]) {
+        customUpzBlock.classList.add('hidden');
+        unionSelect.disabled = false;
+        bangladeshGeoData[div][dist].upazilas[upz].forEach(u => {
+          const opt = document.createElement('option');
+          opt.value = u;
+          opt.innerText = u;
+          unionSelect.appendChild(opt);
+        });
+        const otherOpt = document.createElement('option');
+        otherOpt.value = "custom";
+        otherOpt.innerText = "✍️ আমার ইউনিয়ন তালিকায় নেই (নিজে লিখুন)";
+        unionSelect.appendChild(otherOpt);
+      } else {
+        customUpzBlock.classList.add('hidden');
+        unionSelect.disabled = true;
+      }
+      updateRoutingResult();
+    }
+
+    function onUnionChange() {
+      const union = document.getElementById('unionSelect').value;
+      const wardBlock = document.getElementById('wardBlock');
+      const customBlock = document.getElementById('customUnionBlock');
+
+      if (union === "custom") {
+        customBlock.classList.remove('hidden');
+        wardBlock.classList.remove('hidden');
+      } else if (union) {
+        customBlock.classList.add('hidden');
+        wardBlock.classList.remove('hidden');
+      } else {
+        customBlock.classList.add('hidden');
+        wardBlock.classList.add('hidden');
+      }
+      updateRoutingResult();
+    }
+
+    // স্মার্ট রাউটিং লজিক
+    function updateRoutingResult() {
+      const div = document.getElementById('divSelect').value;
+      const dist = document.getElementById('distSelect').value;
+      
+      let upz = document.getElementById('upazilaSelect').value;
+      if (upz === "custom_upazila") upz = document.getElementById('customUpazilaInput').value || "উপজেলা";
+
+      let union = document.getElementById('unionSelect').value;
+      if (union === "custom") union = document.getElementById('customUnionInput').value || "ইউনিয়ন";
+
+      const ward = document.getElementById('wardSelect').value;
+
+      const autoCard = document.getElementById('autoRouteCard');
+      const officeText = document.getElementById('routeOfficeText');
+      const channelText = document.getElementById('routeChannelText');
+      const reasonText = document.getElementById('routeReasonText');
+
+      if (dist && upz && union) {
+        autoCard.classList.remove('hidden');
+
+        if (selectedCrimeKey === 'drugs') {
+          officeText.innerText = `পুলিশ সুপার (SP) কার্যালয়, ${dist} এবং অফিসার ইনচার্জ (OC), ${upz} থানা`;
+          channelText.innerText = "প্রেরণ চ্যানেল: জেলা পুলিশ অপরাধ দমন সেল ও মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর (DNC)";
+          reasonText.innerText = "মাদক ব্যবসা ফৌজদারি অপরাধ। স্থানীয় মেম্বার-চেয়ারম্যানকে এড়িয়ে সরাসরি জেলা এসপি ও থানার ওসি তাৎক্ষণিক অভিযান পরিচালনা করেন।";
+        } else if (selectedCrimeKey === 'harassment') {
+          officeText.innerText = `উপজেলা নির্বাহী কর্মকর্তা (UNO) ও দ্রুত প্রতিরোধ পুলিশ সেল, ${upz}`;
+          channelText.innerText = "প্রেরণ চ্যানেল: উপজেলা প্রশাসন ও নারী-শিশু সুরক্ষা টাস্কফোর্স";
+          reasonText.innerText = "ইভটিজিং ও যৌন হয়রানিতে ইউএনও সরাসরি ভ্রাম্যমাণ আদালত (Mobile Court) বসিয়ে জেল-জরিমানা করার আইনি ক্ষমতাপ্রাপ্ত।";
+        } else if (selectedCrimeKey === 'extortion') {
+          officeText.innerText = `অফিসার ইনচার্জ (OC), ${upz} থানা ও অতিরিক্ত পুলিশ সুপার সার্কেল`;
+          channelText.innerText = "প্রেরণ চ্যানেল: জেলা পুলিশ হেডকোয়ার্টার্স মনিটরিং সেল";
+          reasonText.innerText = "চাঁদাবাজি ও অস্ত্রধারী মাস্তানি দমনে স্থানীয় প্রভাবমুক্ত রাখতে সরাসরি নিয়মিত পুলিশ বাহিনীর হস্তক্ষেপ অপরিহার্য।";
+        } else if (selectedCrimeKey === 'corruption') {
+          officeText.innerText = `দুর্নীতি দমন কমিশন (দুদক) সমন্বিত জেলা কার্যালয় ও জেলা প্রশাসক (DC), ${dist}`;
+          channelText.innerText = "প্রেরণ চ্যানেল: দুদক অভিযোগ সেল (হটলাইন ১০৬) ও রাজস্ব প্রশাসন";
+          reasonText.innerText = "চেয়ারম্যান-মেম্বার বা সরকারি কর্মকর্তাদের অনিয়ম ও অর্থ আত্মসাতের তদন্তের একক ক্ষমতা কেবল দুদক ও ডিসি মহোদয়ের রয়েছে।";
+        } else if (selectedCrimeKey === 'canal') {
+          officeText.innerText = `উপজেলা সহকারী কমিশনার (ভূমি) / এসি ল্যান্ড ও ইউএনও, ${upz}`;
+          channelText.innerText = "প্রেরণ চ্যানেল: উপজেলা রাজস্ব প্রশাসন ও সরকারি খাসজমি সেল";
+          reasonText.innerText = "সরকারি খাল-বিল দখলমুক্ত করার একক উচ্ছেদ ও আইনি এখতিয়ার এসি ল্যান্ড ও ইউএনও মহোদয়ের।";
+        } else if (selectedCrimeKey === 'union_issue') {
+          officeText.innerText = ward === 'all'
+            ? `${union} চেয়ারম্যান ও সচিব কার্যালয়, ${upz}, ${dist}`
+            : `${union} - ${ward} নং ওয়ার্ড মেম্বার ও চেয়ারম্যান সেল`;
+          channelText.innerText = "প্রেরণ চ্যানেল: স্থানীয় সরকার প্রকৌশল অধিদপ্তর (LGED) ও ইউপি উন্নয়ন সেল";
+          reasonText.innerText = "রাস্তাঘাট, ব্রিজ ও কালভার্ট সংস্কারের স্থানীয় বাজেট ও তদারকির দায়িত্ব ইউনিয়ন পরিষদের।";
+        } else if (selectedCrimeKey === 'dispute') {
+          officeText.innerText = `${union} গ্রাম আদালত (Village Court) ও সালিশি শাখা`;
+          channelText.innerText = "প্রেরণ চ্যানেল: স্থানীয় সরকার গ্রাম আদালত আইন অনুযায়ী";
+          reasonText.innerText = "পারিবারিক ও সীমানা বিরোধের ক্ষেত্রে আদালতে মামলা না করে গ্রাম আদালতে অল্প খরচে মীমাংসা সম্ভব।";
+        } else if (selectedCrimeKey === 'fire') {
+          const fireName = (bangladeshGeoData[div] && bangladeshGeoData[div][dist]) ? bangladeshGeoData[div][dist].fire : "নিকটস্থ ফায়ার স্টেশন";
+          officeText.innerText = `${fireName} ও কন্ট্রোল ডেস্ক`;
+          channelText.innerText = "প্রেরণ চ্যানেল: জাতীয় ফায়ার সার্ভিস নেটওয়ার্ক (১৬১৬৩)";
+          reasonText.innerText = "অগ্নিকাণ্ড ও উদ্ধার তৎপরতায় ফায়ার সার্ভিসের কুইক রেসপন্স টিম সরাসরি জীবন ও সম্পদ রক্ষা করে।";
+        }
+      } else {
+        autoCard.classList.add('hidden');
+      }
+    }
+
+    function toggleNameInput(isAnon) {
+      document.getElementById('nameInputBlock').classList.toggle('hidden', isAnon);
+    }
+
+    function detectGPS() {
+      if (!navigator.geolocation) {
+        alert("আপনার ব্রাউজারে জিপিএস সুবিধা নেই।");
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          document.getElementById('villageInput').value = `জিপিএস: Lat ${pos.coords.latitude.toFixed(4)}, Long ${pos.coords.longitude.toFixed(4)}`;
+          alert("আপনার জিপিএস অবস্থান যুক্ত হয়েছে!");
+        },
+        () => alert("ফোনের লোকেশন পারমিশন চালু করুন।")
+      );
+    }
+
+    // অডিও রেকর্ডার
+    let mediaRec, chunks = [], isRecording = false, timer = 0, timerId;
+    async function toggleAudio() {
+      const icon = document.getElementById('micIcon');
+      const status = document.getElementById('micStatus');
+      const timerDisplay = document.getElementById('micTimer');
+
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRec = new MediaRecorder(stream);
+          chunks = [];
+          mediaRec.ondataavailable = e => chunks.push(e.data);
+          mediaRec.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(blob);
+            const player = document.getElementById('audioPreview');
+            player.src = url;
+            player.classList.remove('hidden');
+            document.getElementById('audioBadge').classList.remove('hidden');
+          };
+          mediaRec.start();
+          isRecording = true;
+          icon.innerText = "⏹️";
+          icon.classList.add('record-pulse');
+          status.innerText = "রেকর্ডিং হচ্ছে (থামাতে চাপুন)...";
+          timer = 0;
+          timerId = setInterval(() => {
+            timer++;
+            timerDisplay.innerText = `০০:${String(timer).padStart(2, '0')} (রেকর্ড চলছে)`;
+          }, 1000);
+        } catch(e) {
+          alert("মাইক্রোফোনের অনুমতি দেওয়া হয়নি বা ব্রাউজার সাপোর্ট করছে না।");
+        }
+      } else {
+        mediaRec.stop();
+        clearInterval(timerId);
+        isRecording = false;
+        icon.innerText = "🎙️";
+        icon.classList.remove('record-pulse');
+        status.innerText = "ভয়েস রেকর্ড সংরক্ষিত";
+        timerDisplay.innerText = `০০:${String(timer).padStart(2, '0')} - যুক্ত হয়েছে`;
+      }
+    }
+
+    function onFileSelected(input) {
+      const count = input.files.length;
+      document.getElementById('fileStatus').innerText = count > 0 ? `${count} টি প্রমাণ ফাইল যুক্ত রয়েছে ✓` : 'কোনো ফাইল নির্বাচিত হয়নি';
+    }
+
+    // দরখাস্ত তৈরি
+    function submitFullReport() {
+      const div = document.getElementById('divSelect').value;
+      const dist = document.getElementById('distSelect').value;
+      
+      let upz = document.getElementById('upazilaSelect').value;
+      if (upz === "custom_upazila") upz = document.getElementById('customUpazilaInput').value.trim();
+
+      let union = document.getElementById('unionSelect').value;
+      if (union === "custom") union = document.getElementById('customUnionInput').value.trim();
+
+      const details = document.getElementById('writtenBox').value.trim();
+
+      if (!div || !dist || !upz || !union) {
+        alert("দয়া করে ধাপ ২ থেকে বিভাগ, জেলা, উপজেলা এবং ইউনিয়ন পরিষদ নির্বাচন বা লিখে পূরণ করুন।");
+        return;
+      }
+
+      if (!details) {
+        alert("দয়া করে ধাপ ৩-এ অভিযোগের বিবরণ অন্তত দুই লাইন লিখুন।");
+        return;
+      }
+
+      const officialRefNumber = `স্মারক নং: না-স/২০২৬/${upz}/${Math.floor(10000 + Math.random() * 90000)}`;
+      const targetOffice = document.getElementById('routeOfficeText').innerText;
+      const fullLoc = `${document.getElementById('villageInput').value || 'গ্রাম'}, ${union}, ${upz}, ${dist}`;
+      const isAnon = document.getElementById('anonCheck').checked;
+      const cName = document.getElementById('complainantName').value;
+      const cPhone = document.getElementById('complainantPhone').value;
+
+      storedComplaints[officialRefNumber] = {
+        target: targetOffice,
+        location: fullLoc,
+        details: details
+      };
+
+      document.getElementById('docDate').innerText = "তারিখ: " + new Date().toLocaleDateString('bn-BD');
+      document.getElementById('docTarget').innerText = targetOffice;
+      document.getElementById('docOfficeLoc').innerText = `${upz}, ${dist}।`;
+      document.getElementById('docSubject').innerText = getCrimeTitle(selectedCrimeKey);
+      document.getElementById('docPlace').innerText = fullLoc;
+      document.getElementById('docDetails').innerText = details;
+      document.getElementById('docTrackId').innerText = officialRefNumber;
+      
+      document.getElementById('docSigner').innerText = isAnon 
+        ? "এলাকাবাসীর পক্ষে (পরিচয় নিরাপত্তার্থে সংরক্ষিত)" 
+        : `${cName || 'সচেতন নাগরিক'} (${cPhone || 'মোবাইল সংযুক্ত'})`;
+
+      // জিমেইল খসড়া প্রস্তুত
+      const emailSubject = encodeURIComponent(`[${officialRefNumber}] ${getCrimeTitle(selectedCrimeKey)} - নাগরিক সহায়তা পোর্টাল`);
+      const emailBody = encodeURIComponent(`বরাবর,\n${targetOffice}\n\nবিষয়: ${getCrimeTitle(selectedCrimeKey)}\nঘটনাস্থল: ${fullLoc}\n\nবিবরণ:\n${details}\n\n${officialRefNumber}\n\n[নাগরিক সহায়তা - স্বাধীন সামাজিক উদ্যোগ (nagorikhelp24.tiiny.site)]\n[সংযুক্ত PDF দরখাস্ত দ্রষ্টব্য]`);
+      document.getElementById('emailDispatchBtn').href = `mailto:uno.${upz.toLowerCase()}@mopa.gov.bd?subject=${emailSubject}&body=${emailBody}`;
+
+      document.getElementById('letterModal').classList.remove('hidden');
+      document.getElementById('letterModal').classList.add('flex');
+    }
+
+    // হোয়াটসঅ্যাপে দরখাস্ত শেয়ার
+    function shareViaWhatsApp() {
+      const refNo = document.getElementById('docTrackId').innerText;
+      const date = document.getElementById('docDate').innerText;
+      const target = document.getElementById('docTarget').innerText;
+      const subject = document.getElementById('docSubject').innerText;
+      const place = document.getElementById('docPlace').innerText;
+      const details = document.getElementById('docDetails').innerText;
+      const signer = document.getElementById('docSigner').innerText;
+
+      const waText = `*নাগরিক সহায়তা প্ল্যাটফর্ম - সামাজিক অভিযোগ আবেদন*\n${refNo} | ${date}\n\n*বরাবর:* ${target}\n*বিষয়:* ${subject}\n*ঘটনাস্থল:* ${place}\n\n*অভিযোগের বিবরণ:*\n${details}\n\n*বিনীত:* ${signer}\n_(nagorikhelp24.tiiny.site)_`;
+      
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
+    }
+
+    // সরাসরি মোবাইলে PDF ফাইল ডাউনলোড
+    function downloadNativePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const refNo = document.getElementById('docTrackId').innerText;
+      const date = document.getElementById('docDate').innerText;
+      const target = document.getElementById('docTarget').innerText;
+      const loc = document.getElementById('docOfficeLoc').innerText;
+      const subject = document.getElementById('docSubject').innerText;
+      const place = document.getElementById('docPlace').innerText;
+      const details = document.getElementById('docDetails').innerText;
+      const signer = document.getElementById('docSigner').innerText;
+
+      doc.setFontSize(12);
+      doc.text("NAGORIK SHOHAYOTA PLATFORM", 105, 12, { align: "center" });
+      doc.setFontSize(8);
+      doc.text("A Non-Government Civic Initiative for Anti-Corruption & Public Grievance", 105, 17, { align: "center" });
+      doc.line(15, 20, 195, 20);
+
+      doc.setFontSize(9);
+      doc.text(refNo, 15, 26);
+      doc.text(date, 160, 26);
+
+      doc.setFontSize(10);
+      doc.text("To,", 15, 34);
+      doc.text(target, 15, 40);
+      doc.text(loc, 15, 46);
+
+      doc.setFontSize(10);
+      doc.text("Subject: " + subject, 15, 54);
+
+      doc.setFontSize(9.5);
+      doc.text("Sir/Madam,", 15, 62);
+      doc.text("Through this independent civic assistance portal, I would like to report the following grievance:", 15, 68);
+
+      doc.text("Incident Location: " + place, 15, 76);
+      doc.text("Complaint Details:", 15, 84);
+
+      const splitDetails = doc.splitTextToSize(details, 175);
+      doc.text(splitDetails, 15, 90);
+
+      const nextY = 90 + (splitDetails.length * 5) + 10;
+      doc.text("Therefore, I earnestly request your prompt investigation and necessary legal action.", 15, nextY);
+
+      doc.text("Sincerely,", 15, nextY + 12);
+      doc.text(signer, 15, nextY + 18);
+      doc.setFontSize(8);
+      doc.text("[Generated via Nagorik Shohayota Social Initiative - nagorikhelp24.tiiny.site]", 15, nextY + 25);
+
+      doc.save("নাগরিক_দরখাস্ত_" + Math.floor(1000 + Math.random()*9000) + ".pdf");
+      alert("✓ দরখাস্তটি PDF হিসেবে ডাউনলোড হয়েছে!\nএখন জিমেইল ওপেন করে পিন আইকন চেপে ফাইলটি দিতে পারেন অথবা সরাসরি হোয়াটসঅ্যাপে পাঠাতে পারেন।");
+    }
+
+    function getCrimeTitle(key) {
+      const map = {
+        drugs: "মাদক ব্যবসা ও জুয়ার স্পট উচ্ছেদ প্রসঙ্গে জরুরি আইনগত আবেদন",
+        harassment: "যৌন হয়রানি ও নারী নির্যাতন প্রতিরোধে তাৎক্ষণিক মোবাইল কোর্ট প্রসঙ্গে",
+        extortion: "চাঁদাবাজি, হুমকি ও সন্ত্রাসী কার্যক্রম দমন প্রসঙ্গে",
+        corruption: "সরকারি প্রকল্প/সেবায় ঘুষ ও দুর্নীতি তদন্ত প্রসঙ্গে",
+        canal: "সরকারি খাল, বিল ও নর্দমা ভরাট/দখলমুক্তকরণ প্রসঙ্গে",
+        union_issue: "ভাঙা রাস্তা, কালভার্ট ও ইউপি উন্নয়ন প্রসঙ্গে অভিযোগ",
+        dispute: "স্থানীয় সীমানা বিরোধ ও গ্রাম আদালতে সালিশ প্রসঙ্গে",
+        fire: "অগ্নিকাণ্ড ও জরুরি উদ্ধার সহায়তা প্রসঙ্গে"
+      };
+      return map[key] || "জরুরি প্রতিকার ও আইনগত ব্যবস্থা গ্রহণ প্রসঙ্গে";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      document.getElementById(id).classList.remove('flex');
+    }
+
+    function checkStatus() {
+      const code = document.getElementById('trackInput').value.trim();
+      const resBox = document.getElementById('trackResultBox');
+
+      if (!code) {
+        alert("স্মারক নম্বর দিন (উদা: না-স/২০২৬/সোনারগাঁও/৮৪৯২০)");
+        return;
+      }
+
+      const found = storedComplaints[code];
+      resBox.classList.remove('hidden');
+      document.getElementById('resCode').innerText = code;
+      
+      if (found) {
+        document.getElementById('resDept').innerText = found.target;
+        document.getElementById('resLoc').innerText = found.location;
+      } else {
+        document.getElementById('resDept').innerText = "সংশ্লিষ্ট জেলা প্রশাসন ও পুলিশ মনিটরিং সেল";
+        document.getElementById('resLoc').innerText = "নথিভুক্ত এলাকা";
+      }
+    }
+  </script>
+</body>
+</html>
