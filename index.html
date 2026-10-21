@@ -4,315 +4,444 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>নাগরিক সহায়তা - স্বাধীন সামাজিক উদ্যোগ</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
-    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
-    .crime-card { cursor: pointer; user-select: none; transition: all 0.2s ease; }
-    .crime-card.active { border-color: #2563eb !important; background-color: #eff6ff !important; box-shadow: 0 4px 12px rgba(37,99,235,0.2); transform: scale(1.02); }
-    .record-pulse { animation: recPulse 1.2s infinite; }
-    @keyframes recPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.6; } }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #090d16; color: #1e293b; padding-bottom: 90px; }
+    .container { max-width: 480px; margin: 0 auto; padding: 14px; }
+    
+    /* হেডার ও হটলাইন */
+    .header { position: sticky; top: 0; z-index: 100; background: rgba(9, 13, 22, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid #1e293b; padding: 12px 14px; }
+    .header-title-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .brand-box { display: flex; align-items: center; gap: 8px; }
+    .brand-icon { width: 34px; height: 34px; border-radius: 10px; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; }
+    .brand-name { font-size: 14px; font-weight: bold; color: #ffffff; }
+    .brand-sub { font-size: 10px; color: #34d399; }
+    .badge { font-size: 10px; background: #1e293b; color: #cbd5e1; padding: 3px 8px; border-radius: 99px; border: 1px solid #334155; }
+
+    .hotline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .hl-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 2px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 11px; }
+    .hl-btn span:last-child { font-size: 8px; font-weight: normal; opacity: 0.9; margin-top: 1px; }
+    .hl-red { background: #dc2626; }
+    .hl-orange { background: #ea580c; }
+    .hl-pink { background: #c026d3; }
+    .hl-blue { background: #2563eb; }
+
+    /* কার্ড ও সেকশন */
+    .card { background: #ffffff; border-radius: 20px; padding: 18px; margin-top: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .step-tag { font-size: 10px; font-weight: bold; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 99px; }
+    .step-hint { font-size: 11px; color: #64748b; }
+    .card-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+
+    /* অপরাধ সিলেকশন গ্রিড */
+    .crime-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .crime-item { border: 2px solid #e2e8f0; border-radius: 14px; padding: 10px; display: flex; align-items: flex-start; gap: 8px; cursor: pointer; background: #ffffff; transition: 0.15s; }
+    .crime-item.active { border-color: #2563eb !important; background: #eff6ff !important; box-shadow: 0 3px 10px rgba(37,99,235,0.15); }
+    .crime-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+    .crime-info h3 { font-size: 12px; font-weight: 700; color: #1e293b; }
+    .crime-info p { font-size: 9.5px; color: #64748b; margin-top: 2px; line-height: 1.2; }
+
+    /* ফর্ম ইনপুট */
+    .form-group { margin-bottom: 10px; }
+    .form-label { display: block; font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 4px; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    select, input[type="text"], input[type="tel"], textarea { width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 600; color: #0f172a; outline: none; }
+    select:focus, input:focus, textarea:focus { border-color: #2563eb; background: #ffffff; }
+
+    /* উপযুক্ত দপ্তর বক্স */
+    .target-box { background: #0f172a; color: white; border-radius: 12px; padding: 12px; margin-top: 10px; }
+    .target-tag { font-size: 9px; color: #34d399; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
+    .target-name { font-size: 12px; font-weight: bold; color: #fde047; line-height: 1.3; }
+    .target-reason { font-size: 10px; color: #cbd5e1; margin-top: 6px; background: rgba(255,255,255,0.06); padding: 6px; border-radius: 6px; }
+
+    /* বাটন */
+    .btn-submit { width: 100%; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .btn-submit:active { transform: scale(0.98); }
+
+    /* মডাল */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 14px; }
+    .modal-overlay.show { display: flex; }
+    .modal-box { background: white; border-radius: 16px; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; padding: 16px; }
+    .doc-preview { background: #f8fafc; border: 2px dashed #94a3b8; padding: 14px; border-radius: 10px; font-size: 12px; line-height: 1.6; color: #0f172a; margin: 12px 0; }
+
+    .modal-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+    .btn-action { border: none; padding: 10px 4px; border-radius: 10px; font-size: 11px; font-weight: bold; color: white; cursor: pointer; text-align: center; text-decoration: none; }
+    .bg-wa { background: #16a34a; }
+    .bg-print { background: #0284c7; }
+    .bg-mail { background: #4f46e5; }
+    
+    .hidden { display: none !important; }
   </style>
 </head>
-<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-800 min-h-screen pb-36">
+<body>
 
-  <!-- জরুরি হটলাইন বার -->
-  <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 shadow-2xl">
-    <div class="max-w-md mx-auto">
-      <div class="flex items-center justify-between mb-2">
-        <div class="flex items-center gap-2">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-emerald-500/20">
-            ন
-          </div>
+  <!-- হেডার -->
+  <header class="header">
+    <div class="container" style="padding: 0;">
+      <div class="header-title-wrap">
+        <div class="brand-box">
+          <div class="brand-icon">ন</div>
           <div>
-            <h1 class="text-sm font-bold text-white tracking-wide">নাগরিক সহায়তা</h1>
-            <p class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> দুর্নীতিমুক্ত সমাজ গঠনে স্বাধীন নাগরিক উদ্যোগ
-            </p>
+            <div class="brand-name">নাগরিক সহায়তা</div>
+            <div class="brand-sub">দুর্নীতিমুক্ত সমাজ গঠনে স্বাধীন সামাজিক উদ্যোগ</div>
           </div>
         </div>
-        <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full">সামাজিক প্ল্যাটফর্ম</span>
+        <span class="badge">সামাজিক প্ল্যাটফর্ম</span>
       </div>
 
-      <!-- ওয়ান-ট্যাপ ডায়াল -->
-      <div class="grid grid-cols-4 gap-2 text-center text-xs">
-        <a href="tel:999" class="bg-gradient-to-r from-red-600 to-rose-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-red-600/30 flex flex-col items-center">
-          <span class="text-xs">🚨 ৯৯৯</span>
-          <span class="text-[9px] text-red-100 font-normal">পুলিশ/অ্যাম্বুলেন্স</span>
-        </a>
-        <a href="tel:16163" class="bg-gradient-to-r from-orange-600 to-amber-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-orange-600/30 flex flex-col items-center">
-          <span class="text-xs">🔥 ১৬১৬৩</span>
-          <span class="text-[9px] text-orange-100 font-normal">ফায়ার সার্ভিস</span>
-        </a>
-        <a href="tel:109" class="bg-gradient-to-r from-fuchsia-600 to-pink-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-pink-600/30 flex flex-col items-center">
-          <span class="text-xs">🛡️ ১০৯</span>
-          <span class="text-[9px] text-pink-100 font-normal">নারী নিরাপত্তা</span>
-        </a>
-        <a href="tel:333" class="bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-95 text-white p-2 rounded-xl font-bold shadow-md shadow-blue-600/30 flex flex-col items-center">
-          <span class="text-xs">🏛️ ৩৩৩</span>
-          <span class="text-[9px] text-blue-100 font-normal">সরকারি সেবা</span>
-        </a>
+      <div class="hotline-grid">
+        <a href="tel:999" class="hl-btn hl-red"><span>🚨 ৯৯৯</span><span>পুলিশ</span></a>
+        <a href="tel:16163" class="hl-btn hl-orange"><span>🔥 ১৬১৬৩</span><span>ফায়ার সার্ভিস</span></a>
+        <a href="tel:109" class="hl-btn hl-pink"><span>🛡️ ১০৯</span><span>নারী সুরক্ষা</span></a>
+        <a href="tel:333" class="hl-btn hl-blue"><span>🏛️ ৩৩৩</span><span>সরকারি সেবা</span></a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-md mx-auto px-4 mt-4 space-y-5">
+  <main class="container">
 
-    <!-- ব্যানার -->
-    <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl text-xs text-slate-300 space-y-1.5 shadow-md">
-      <div class="flex items-center gap-1.5 font-bold text-emerald-400">
-        <span>🌱</span> <span>আমাদের উদ্দেশ্য ও অবস্থান:</span>
+    <!-- ধাপ ১ -->
+    <section class="card">
+      <div class="card-top">
+        <span class="step-tag">ধাপ ১</span>
+        <span class="step-hint">যেকোনো বিষয় স্পর্শ করুন</span>
       </div>
-      <p class="text-[11px] text-slate-300 leading-relaxed">
-        এটি দেশ ও সমাজকে দুর্নীতিমুক্ত রাখতে এবং সাধারণ মানুষের সুবিধার্থে গড়ে তোলা একটি <strong>সম্পূর্ণ স্বাধীন ও অলাভজনক সামাজিক নাগরিক উদ্যোগ</strong>।
-      </p>
+      <h2 class="card-title">অভিযোগ বা সেবার বিষয় নির্বাচন করুন</h2>
+
+      <div class="crime-grid">
+        <div class="crime-item active" onclick="pickCrime('drugs', this)">
+          <div class="crime-icon">💊</div>
+          <div class="crime-info">
+            <h3>মাদক ব্যবসা ও জুয়া</h3>
+            <p>মাদক স্পট, কারবারি</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('harassment', this)">
+          <div class="crime-icon">⚠️</div>
+          <div class="crime-info">
+            <h3>যৌন হয়রানি ও ইভটিজিং</h3>
+            <p>নিপীড়ন, রাস্তায় উত্যক্ত</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('extortion', this)">
+          <div class="crime-icon">🔫</div>
+          <div class="crime-info">
+            <h3>চাঁদাবাজি ও ছিনতাই</h3>
+            <p>টাকা দাবি, মাস্তানি</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('corruption', this)">
+          <div class="crime-icon">💰</div>
+          <div class="crime-info">
+            <h3>ঘুষ ও অনিয়ম</h3>
+            <p>প্রকল্পে আত্মসাৎ, ঘুষ</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('canal', this)">
+          <div class="crime-icon">🌊</div>
+          <div class="crime-info">
+            <h3>খাল ও জলাশয় দখল</h3>
+            <p>জলাবদ্ধতা, সরকারি জায়গা</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('union_issue', this)">
+          <div class="crime-icon">🏛️</div>
+          <div class="crime-info">
+            <h3>রাস্তা ও কালভার্ট ভাঙন</h3>
+            <p>মেরামত, ব্রিজের সমস্যা</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('dispute', this)">
+          <div class="crime-icon">📜</div>
+          <div class="crime-info">
+            <h3>সীমানা বিরোধ ও সালিশ</h3>
+            <p>জমি বিরোধ, গ্রাম আদালত</p>
+          </div>
+        </div>
+
+        <div class="crime-item" onclick="pickCrime('fire', this)">
+          <div class="crime-icon">🔥</div>
+          <div class="crime-info">
+            <h3>অগ্নিকাণ্ড ও উদ্ধার</h3>
+            <p>আগুন, উদ্ধারকাজ</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ধাপ ২ -->
+    <section class="card">
+      <div class="card-top">
+        <span class="step-tag">ধাপ ২</span>
+        <span class="step-hint">প্রশাসনিক এক্তিয়ার</span>
+      </div>
+      <h2 class="card-title">এলাকা ও উপযুক্ত দপ্তর</h2>
+
+      <div class="form-grid-2">
+        <div>
+          <label class="form-label">বিভাগ *</label>
+          <select id="divSelect" onchange="onDivChange()">
+            <option value="">-- বিভাগ বাছুন --</option>
+            <option value="ঢাকা">ঢাকা বিভাগ</option>
+            <option value="চট্টগ্রাম">চট্টগ্রাম বিভাগ</option>
+            <option value="রাজশাহী">রাজশাহী বিভাগ</option>
+            <option value="খুলনা">খুলনা বিভাগ</option>
+            <option value="বরিশাল">বরিশাল বিভাগ</option>
+            <option value="সিলেট">সিলেট বিভাগ</option>
+            <option value="রংপুর">রংপুর বিভাগ</option>
+            <option value="ময়মনসিংহ">ময়মনসিংহ বিভাগ</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">জেলা *</label>
+          <select id="distSelect" onchange="onDistChange()" disabled>
+            <option value="">আগে বিভাগ বাছুন</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div>
+          <label class="form-label">উপজেলা / থানা *</label>
+          <select id="upzSelect" onchange="onUpzChange()" disabled>
+            <option value="">আগে জেলা বাছুন</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">ইউনিয়ন পরিষদ *</label>
+          <select id="unionSelect" onchange="onUnionChange()" disabled>
+            <option value="">আগে উপজেলা বাছুন</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- কাস্টম উপজেলা লেখার বক্স -->
+      <div id="customUpzBox" class="form-group hidden">
+        <label class="form-label" style="color: #2563eb;">উপজেলা বা থানার নাম লিখুন:</label>
+        <input type="text" id="customUpzInput" oninput="refreshRouting()" placeholder="উদা: সোনারগাঁও বা বন্দর থানা">
+      </div>
+
+      <!-- কাস্টম ইউনিয়ন লেখার বক্স -->
+      <div id="customUnionBox" class="form-group hidden">
+        <label class="form-label" style="color: #2563eb;">ইউনিয়ন বা এলাকার নাম লিখুন:</label>
+        <input type="text" id="customUnionInput" oninput="refreshRouting()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন বা ৩ নং ওয়ার্ড">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">গ্রাম / পাড়া / এলাকা</label>
+        <input type="text" id="villageInput" placeholder="উদা: পূর্ব পাড়া বা কলেজ রোড">
+      </div>
+
+      <div id="targetRouteCard" class="target-box hidden">
+        <div class="target-tag">🎯 নির্ধারিত উপযুক্ত প্রাপক</div>
+        <div id="targetDeptName" class="target-name"></div>
+        <div id="targetReason" class="target-reason"></div>
+      </div>
+    </section>
+
+    <!-- ধাপ ৩ -->
+    <section class="card">
+      <div class="card-top">
+        <span class="step-tag">ধাপ ৩</span>
+        <span class="step-hint">অভিযোগ বিবরণ</span>
+      </div>
+      <h2 class="card-title">লিখিত অভিযোগ পেশ করুন</h2>
+
+      <div class="form-group">
+        <label class="form-label">অভিযোগের বিবরণ লিখুন *</label>
+        <textarea id="detailBox" rows="4" placeholder="ঘটনাস্থল ও সমস্যার বিস্তারিত বিবরণ লিখুন..."></textarea>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+        <span style="font-size: 11px; font-weight: bold; color: #334155;">🔒 পরিচয় সম্পূর্ণ গোপন রাখুন</span>
+        <input type="checkbox" id="anonCheck" checked onchange="document.getElementById('nameBlock').classList.toggle('hidden', this.checked)" style="width: 18px; height: 18px; cursor: pointer;">
+      </div>
+
+      <div id="nameBlock" class="form-grid-2 hidden">
+        <input type="text" id="uName" placeholder="আপনার নাম">
+        <input type="tel" id="uPhone" placeholder="মোবাইল নম্বর">
+      </div>
+
+      <button type="button" class="btn-submit" onclick="generateLetter()">দরখাস্ত তৈরি ও ডাউনলোড করুন ➔</button>
+    </section>
+
+  </main>
+
+  <!-- দরখাস্ত মডাল -->
+  <div id="docModal" class="modal-overlay">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
+        <strong style="font-size: 14px; color: #0f172a;">প্রস্তুতকৃত দরখাস্ত</strong>
+        <span onclick="closeModal()" style="font-size: 20px; cursor: pointer; color: #64748b; font-weight: bold;">✕</span>
+      </div>
+
+      <div id="letterBody" class="doc-preview">
+        <!-- ডায়নামিক টেক্সট বসবে -->
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-action bg-print" onclick="window.print()">🖨️ প্রিন্ট / PDF</button>
+        <button class="btn-action bg-wa" onclick="sendWA()">💬 হোয়াটসঅ্যাপ</button>
+        <a id="mailLink" class="btn-action bg-mail" href="#">✉️ জিমেইল</a>
+      </div>
     </div>
+  </div>
 
-    <!-- ধাপ ১: সমস্যার ধরন নির্বাচন -->
-    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
-      <div class="flex items-center justify-between">
-        <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ১</span>
-        <span class="text-xs text-slate-400">একটি বিষয় স্পর্শ করুন</span>
-      </div>
-      <h2 class="text-base font-bold text-slate-900">অভিযোগ বা সেবার বিষয় নির্বাচন করুন</h2>
+  <script>
+    // পূর্ণাঙ্গ ডেটাবেজ
+    const geoDB = {
+      "ঢাকা": {
+        "নারায়ণগঞ্জ": ["সোনারগাঁও", "আড়াইহাজার", "রূপগঞ্জ", "বন্দর", "নারায়ণগঞ্জ সদর"],
+        "ঢাকা": ["সাভার", "কেরানীগঞ্জ", "ধামরাই", "দোহার", "নবাবগঞ্জ"],
+        "গাজীপুর": ["শ্রীপুর", "কালিয়াকৈর", "কাপাসিয়া", "কালীগঞ্জ", "গাজীপুর সদর"],
+        "মুন্সীগঞ্জ": ["সিরাজদিখান", "লৌহজং", "শ্রীনগর", "মুন্সীগঞ্জ সদর"],
+        "নরসিংদী": ["নরসিংদী সদর", "রায়পুরা", "শিবপুর", "পলাশ"],
+        "মানিকগঞ্জ": ["মানিকগঞ্জ সদর", "সিংগাইর", "সাটুরিয়া"],
+        "ফরিদপুর": ["ফরিদপুর সদর", "ভাঙ্গা", "বোয়ালমারী"],
+        "মাদারীপুর": ["মাদারীপুর সদর", "শিবচর", "কালকিনি"],
+        "শরীয়তপুর": ["শরীয়তপুর সদর", "জাজিরা", "নড়িয়া"],
+        "কিশোরগঞ্জ": ["কিশোরগঞ্জ সদর", "ভৈরব", "বাজিতপুর"],
+        "টাঙ্গাইল": ["টাঙ্গাইল সদর", "মির্জাপুর", "মধুপুর"]
+      },
+      "চট্টগ্রাম": {
+        "চট্টগ্রাম": ["সীতাকুণ্ড", "মিরসরাই", "হাটহাজারী", "পটিয়া", "রাউজান"],
+        "কক্সবাজার": ["কক্সবাজার সদর", "উখিয়া", "টেকনাফ", "চকরিয়া"],
+        "কুমিল্লা": ["দাউদকান্দি", "চান্দিনা", "লাকসাম", "দেবীদ্বার"],
+        "ফেনী": ["ফেনী সদর", "সোনাগাজী", "ছাগলনাইয়া"],
+        "নোয়াখালী": ["নোয়াখালী সদর", "বেগমগঞ্জ", "সেনবাগ"],
+        "ব্রাহ্মণবাড়িয়া": ["ব্রাহ্মণবাড়িয়া সদর", "আশুগঞ্জ", "কসবা"]
+      },
+      "রাজশাহী": {
+        "রাজশাহী": ["পবা", "গোদাগাড়ী", "বাঘা", "চারঘাট"],
+        "বগুড়া": ["শেরপুর", "শিবগঞ্জ", "বগুড়া সদর"],
+        "পাবনা": ["পাবনা সদর", "ঈশ্বরদী", "সুজানগর"],
+        "সিরাজগঞ্জ": ["সিরাজগঞ্জ সদর", "শাহজাদপুর", "উল্লাপাড়া"]
+      },
+      "খুলনা": {
+        "খুলনা": ["ডুমুরিয়া", "রূপসা", "তেরখাদা"],
+        "যশোর": ["ঝিকরগাছা", "শার্শা", "যশোর সদর"],
+        "কুষ্টিয়া": ["কুষ্টিয়া সদর", "কুমারখালী", "ভেড়ামারা"]
+      },
+      "বরিশাল": {
+        "বরিশাল": ["বাবুগঞ্জ", "বাকেরগঞ্জ", "বরিশাল সদর"],
+        "পটুয়াখালী": ["পটুয়াখালী সদর", "কলাপাড়া", "গলাচিপা"]
+      },
+      "সিলেট": {
+        "সিলেট": ["গোলাপগঞ্জ", "বিয়ানীবাজার", "সিলেট সদর"],
+        "মৌলভীবাজার": ["শ্রীমঙ্গল", "কুলাউড়া", "মৌলভীবাজার সদর"]
+      },
+      "রংপুর": {
+        "রংপুর": ["পীরগঞ্জ", "মিঠাপুকুর", "রংপুর সদর"],
+        "দিনাজপুর": ["দিনাজপুর সদর", "পার্বতীপুর", "বিরামপুর"]
+      },
+      "ময়মনসিংহ": {
+        "ময়মনসিংহ": ["ত্রিশাল", "মুক্তাগাছা", "ময়মনসিংহ সদর"],
+        "জামালপুর": ["জামালপুর সদর", "মেলান্দহ", "সরিষাবাড়ী"]
+      }
+    };
 
-      <div class="grid grid-cols-2 gap-2.5 pt-1">
-        <div data-crime="drugs" onclick="selectCrime('drugs', this)" class="crime-card active flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg shrink-0">💊</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">মাদক ব্যবসা ও জুয়া</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মাদক স্পট, কারবারি</p>
-          </div>
-        </div>
+    let activeCrime = 'drugs';
 
-        <div data-crime="harassment" onclick="selectCrime('harassment', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0">⚠️</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">যৌন হয়রানি ও ইভটিজিং</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">নিপীড়ন, রাস্তায় উত্যক্ত</p>
-          </div>
-        </div>
+    // ১. অপরাধ নির্বাচন ফাংশন
+    function pickCrime(key, el) {
+      activeCrime = key;
+      document.querySelectorAll('.crime-item').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      refreshRouting();
+    }
 
-        <div data-crime="extortion" onclick="selectCrime('extortion', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg shrink-0">🔫</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">চাঁদাবাজি ও ছিনতাই</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">টাকা দাবি, সন্ত্রাসী দল</p>
-          </div>
-        </div>
+    // ২. বিভাগ পরিবর্তন
+    function onDivChange() {
+      const div = document.getElementById('divSelect').value;
+      const distSelect = document.getElementById('distSelect');
+      const upzSelect = document.getElementById('upzSelect');
+      const unionSelect = document.getElementById('unionSelect');
 
-        <div data-crime="corruption" onclick="selectCrime('corruption', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg shrink-0">💰</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">ঘুষ ও অনিয়ম</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">প্রকল্পে আত্মসাৎ, ঘুষ</p>
-          </div>
-        </div>
+      distSelect.innerHTML = '<option value="">-- জেলা বাছুন --</option>';
+      upzSelect.innerHTML = '<option value="">আগে জেলা বাছুন</option>';
+      unionSelect.innerHTML = '<option value="">আগে উপজেলা বাছুন</option>';
+      
+      distSelect.disabled = true;
+      upzSelect.disabled = true;
+      unionSelect.disabled = true;
 
-        <div data-crime="canal" onclick="selectCrime('canal', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-lg shrink-0">🌊</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">খাল ও জলাশয় দখল</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জলাবদ্ধতা, জায়গা দখল</p>
-          </div>
-        </div>
+      document.getElementById('customUpzBox').classList.add('hidden');
+      document.getElementById('customUnionBox').classList.add('hidden');
+      document.getElementById('targetRouteCard').classList.add('hidden');
 
-        <div data-crime="union_issue" onclick="selectCrime('union_issue', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0">🏛️</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">রাস্তা ও কালভার্ট ভাঙন</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">মেরামত কাজ, ব্রিজের সমস্যা</p>
-          </div>
-        </div>
+      if (div && geoDB[div]) {
+        distSelect.disabled = false;
+        Object.keys(geoDB[div]).forEach(d => {
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.innerText = d;
+          distSelect.appendChild(opt);
+        });
+      }
+    }
 
-        <div data-crime="dispute" onclick="selectCrime('dispute', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg shrink-0">📜</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">সীমানা বিরোধ ও সালিশ</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">জমি বিরোধ, গ্রাম আদালত</p>
-          </div>
-        </div>
+    // ৩. জেলা পরিবর্তন
+    function onDistChange() {
+      const div = document.getElementById('divSelect').value;
+      const dist = document.getElementById('distSelect').value;
+      const upzSelect = document.getElementById('upzSelect');
 
-        <div data-crime="fire" onclick="selectCrime('fire', this)" class="crime-card flex items-start gap-2.5 p-3 rounded-2xl border-2 border-slate-200 text-left">
-          <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg shrink-0">🔥</div>
-          <div>
-            <h3 class="text-xs font-bold text-slate-800">অগ্নিকাণ্ড ও উদ্ধার</h3>
-            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">আগুন, উদ্ধারকাজ, গ্যাস লিক</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      upzSelect.innerHTML = '<option value="">-- উপজেলা বাছুন --</option>';
+      upzSelect.disabled = true;
 
-    <!-- ধাপ ২: প্রশাসনিক এলাকা নির্বাচন -->
-    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3.5">
-      <div class="flex items-center justify-between">
-        <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ২</span>
-        <button type="button" onclick="detectGPS()" class="text-xs font-bold text-emerald-600 flex items-center gap-1 active:scale-95 bg-emerald-50 px-2.5 py-1 rounded-lg">
-          📍 জিপিএস পিন
-        </button>
-      </div>
-      <h2 class="text-base font-bold text-slate-900">এলাকা ও উপযুক্ত দপ্তর নির্বাচন</h2>
+      if (div && dist && geoDB[div][dist]) {
+        upzSelect.disabled = false;
+        geoDB[div][dist].forEach(u => {
+          const opt = document.createElement('option');
+          opt.value = u;
+          opt.innerText = u;
+          upzSelect.appendChild(opt);
+        });
+        const customOpt = document.createElement('option');
+        customOpt.value = "custom_upz";
+        customOpt.innerText = "✍️ আমার উপজেলা তালিকায় নেই (নিজে লিখুন)";
+        upzSelect.appendChild(customOpt);
+      }
+      refreshRouting();
+    }
 
-      <div class="space-y-2.5">
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">বিভাগ <span class="text-red-500">*</span></label>
-            <select id="divSelect" onchange="onDivisionChange()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">-- বিভাগ --</option>
-              <option value="ঢাকা">ঢাকা বিভাগ</option>
-              <option value="চট্টগ্রাম">চট্টগ্রাম বিভাগ</option>
-              <option value="রাজশাহী">রাজশাহী বিভাগ</option>
-              <option value="খুলনা">খুলনা বিভাগ</option>
-              <option value="বরিশাল">বরিশাল বিভাগ</option>
-              <option value="সিলেট">সিলেট বিভাগ</option>
-              <option value="রংপুর">রংপুর বিভাগ</option>
-              <option value="ময়মনসিংহ">ময়মনসিংহ বিভাগ</option>
-            </select>
-          </div>
+    // ৪. উপজেলা পরিবর্তন
+    function onUpzChange() {
+      const upz = document.getElementById('upzSelect').value;
+      const unionSelect = document.getElementById('unionSelect');
+      const customUpzBox = document.getElementById('customUpzBox');
 
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">জেলা <span class="text-red-500">*</span></label>
-            <select id="distSelect" onchange="onDistrictChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
-              <option value="">আগে বিভাগ বাছুন</option>
-            </select>
-          </div>
-        </div>
+      unionSelect.innerHTML = '<option value="">-- ইউনিয়ন পরিষদ বাছুন --</option>';
 
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">উপজেলা / থানা <span class="text-red-500">*</span></label>
-            <select id="upazilaSelect" onchange="onUpazilaChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
-              <option value="">আগে জেলা বাছুন</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">ইউনিয়ন পরিষদ / পৌরসভা <span class="text-red-500">*</span></label>
-            <select id="unionSelect" onchange="onUnionChange()" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
-              <option value="">আগে উপজেলা বাছুন</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- কাস্টম উপজেলা লেখার বক্স -->
-        <div id="customUpazilaBlock" class="hidden">
-          <label class="block text-[11px] font-bold text-blue-700 mb-1">উপজেলা/থানার নাম লিখুন:</label>
-          <input type="text" id="customUpazilaInput" oninput="updateRoutingResult()" placeholder="উদা: সোনারগাঁও বা রূপগঞ্জ" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
-        </div>
-
-        <!-- কাস্টম ইউনিয়ন লেখার বক্স -->
-        <div id="customUnionBlock" class="hidden">
-          <label class="block text-[11px] font-bold text-blue-700 mb-1">ইউনিয়ন/পৌরসভার নাম লিখুন:</label>
-          <input type="text" id="customUnionInput" oninput="updateRoutingResult()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন" class="w-full bg-blue-50/50 border border-blue-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
-        </div>
-
-        <div id="wardBlock" class="hidden grid grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1">ওয়ার্ড নম্বর</label>
-            <select id="wardSelect" onchange="updateRoutingResult()" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="all" selected>সমগ্র এলাকা</option>
-              <option value="১">১ নং ওয়ার্ড</option>
-              <option value="২">২ নং ওয়ার্ড</option>
-              <option value="৩">৩ নং ওয়ার্ড</option>
-              <option value="৪">৪ নং ওয়ার্ড</option>
-              <option value="৫">৫ নং ওয়ার্ড</option>
-              <option value="৬">৬ নং ওয়ার্ড</option>
-              <option value="৭">৭ নং ওয়ার্ড</option>
-              <option value="৮">৮ নং ওয়ার্ড</option>
-              <option value="৯">৯ নং ওয়ার্ড</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1">গ্রাম / পাড়া / মোড়</label>
-            <input type="text" id="villageInput" placeholder="উদা: পশ্চিম পাড়া" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-        </div>
-
-        <!-- উপযুক্ত রিসিভার কার্ড -->
-        <div id="autoRouteCard" class="hidden p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 to-blue-950 text-white space-y-2">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
-            <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">🎯 উপযুক্ত প্রশাসনিক প্রাপক</span>
-            <span class="text-[9px] bg-emerald-900/80 text-emerald-200 px-2 py-0.5 rounded-full border border-emerald-700">সরাসরি অ্যাকশন সেল</span>
-          </div>
-          <div>
-            <p id="routeOfficeText" class="text-xs font-bold text-amber-300 leading-snug"></p>
-            <p id="routeChannelText" class="text-[10px] text-slate-300 mt-0.5"></p>
-          </div>
-          <div class="bg-blue-900/40 p-2 rounded-xl border border-blue-700/50 text-[10px] text-blue-100 flex items-start gap-1.5">
-            <span>⚖️</span>
-            <span id="routeReasonText">এই অপরাধ দমনে স্থানীয় প্রভাবমুক্ত রাখতে সরাসরি উপযুক্ত প্রশাসনিক ও পুলিশি কর্তৃপক্ষের আইনি এখতিয়ার কার্যকর।</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ধাপ ৩: লিখিত বিবরণ ও প্রমাণ -->
-    <section class="bg-white rounded-3xl p-5 shadow-xl border border-slate-100 space-y-3">
-      <div class="flex items-center justify-between">
-        <span class="text-[11px] font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full uppercase tracking-wider">ধাপ ৩</span>
-        <span class="text-xs text-slate-400">মৌখিক বা ফাইল প্রমাণ</span>
-      </div>
-      <h2 class="text-base font-bold text-slate-900">লিখিত অভিযোগ ও প্রমাণ</h2>
-
-      <!-- মৌখিক অডিও রেকর্ডার -->
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50/40 p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <button type="button" id="micBtn" onclick="toggleAudio()" class="w-11 h-11 rounded-2xl bg-white shadow-md border border-slate-200 flex items-center justify-center text-lg active:scale-90 transition">
-            <span id="micIcon">🎙️</span>
-          </button>
-          <div>
-            <p id="micStatus" class="text-xs font-bold text-slate-800">মুখে বলে অভিযোগ রেকর্ড</p>
-            <p id="micTimer" class="text-[10px] font-mono text-slate-500">০০:০০ (ট্যাপ করে শুরু করুন)</p>
-          </div>
-        </div>
-        <span id="audioBadge" class="hidden text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-lg">অডিও যুক্ত ✓</span>
-      </div>
-      <audio id="audioPreview" controls class="w-full h-8 hidden"></audio>
-
-      <!-- বিবরণ বক্স -->
-      <div>
-        <label class="block text-[11px] font-bold text-slate-700 mb-1">অভিযোগের লিখিত বিবরণ <span class="text-red-500">*</span></label>
-        <textarea id="writtenBox" rows="3" placeholder="ঘটনাস্থল, অভিযুক্তদের অপকর্ম বা সমস্যার সঠিক বিবরণ লিখুন..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-      </div>
-
-      <!-- ফাইল আপলোড -->
-      <label class="border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-2xl p-3 flex flex-col items-center justify-center cursor-pointer bg-slate-50 text-center transition">
-        <span class="text-xl">📁</span>
-        <span class="text-xs font-bold text-slate-700 mt-1">ছবি বা প্রমাণের ডকুমেন্ট যুক্ত করুন</span>
-        <span id="fileStatus" class="text-[10px] text-slate-400">কোনো ফাইল নির্বাচিত হয়নি</span>
-        <input type="file" id="filesInput" multiple accept="image/*,video/*,audio/*,.pdf" onchange="onFileSelected(this)" class="hidden">
-      </label>
-
-      <!-- গোপনীয়তা চেকবক্স -->
-      <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
-        <div class="flex items-center gap-2">
-          <span class="text-base">🔒</span>
-          <div>
-            <p class="text-xs font-bold text-slate-800">পরিচয় সম্পূর্ণ গোপন রাখুন</p>
-            <p class="text-[10px] text-slate-500">দপ্তরের ফাইলে আপনার নাম ও নম্বর থাকবে না</p>
-          </div>
-        </div>
-        <input type="checkbox" id="anonCheck" checked onchange="toggleNameInput(this.checked)" class="w-5 h-5 accent-blue-600 rounded">
-      </div>
-
-      <div id="nameInputBlock" class="hidden grid grid-cols-2 gap-2">
-        <input type="text" id="complainantName" placeholder="আপনার নাম" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
-        <input type="tel" id="complainantPhone" placeholder="মোবাইল নম্বর" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
-      </div>
-
-      <div class="space-y-2 pt-1">
-        <button type="button" onclick="submitFullReport()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 active:scale-[0.98] text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 transition">
-          <span>অফিসিয়াল দরখাস্ত ও PDF প্রস্তুত করুন</span>
-          <span>➔</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ধাপ ৪: ট্র্যাকিং -->
-    <section class="bg-white rounded-3xl 
+      if (upz === "custom_upz") {
+        customUpzBox.classList.remove('hidden');
+        unionSelect.disabled = false;
+        const cOpt = document.createElement('option');
+        cOpt.value = "custom_union";
+        cOpt.innerText = "✍️ ইউনিয়ন পরিষদ নিজে লিখুন";
+        unionSelect.appendChild(cOpt);
+      } else if (upz) {
+        customUpzBox.classList.add('hidden');
+        unionSelect.disabled = false;
+        
+        // সাধারণ ডামি ইউনিয়ন
+        const commonUnions = ["১ নং ইউনিয়ন", "২ নং ইউনিয়ন", "৩ নং ইউনিয়ন", "৪ নং ইউনিয়ন", "পৌরসভা এলাকা"];
+        commonUnions.forEach(un => {
+          const opt = document.createElement('option');
+          opt.value = un;
+          opt.innerText = un;
+          unionSelect.appendChild(opt);
+        });
+        const cOpt = document.createElement('option');
+        cOpt.value = "custom
