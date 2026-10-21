@@ -10,60 +10,94 @@
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: #090d16; color: #1e293b; padding-bottom: 90px; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Hind Siliguri', sans-serif; 
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    input, textarea {
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    body { background-color: #0b1120; color: #0f172a; padding-bottom: 90px; }
     .container { max-width: 480px; margin: 0 auto; padding: 14px; }
     
-    /* হেডার ও হটলাইন */
-    .header { position: sticky; top: 0; z-index: 100; background: rgba(9, 13, 22, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid #1e293b; padding: 12px 14px; }
-    .header-title-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .header { position: sticky; top: 0; z-index: 100; background: rgba(11, 17, 32, 0.98); border-bottom: 1px solid #1e293b; padding: 12px 14px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .brand-box { display: flex; align-items: center; gap: 8px; }
     .brand-icon { width: 34px; height: 34px; border-radius: 10px; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; }
     .brand-name { font-size: 14px; font-weight: bold; color: #ffffff; }
     .brand-sub { font-size: 10px; color: #34d399; }
-    .badge { font-size: 10px; background: #1e293b; color: #cbd5e1; padding: 3px 8px; border-radius: 99px; border: 1px solid #334155; }
+    .badge { font-size: 10px; background: #1e293b; color: #94a3b8; padding: 3px 8px; border-radius: 99px; border: 1px solid #334155; }
 
     .hotline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .hl-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 2px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 11px; }
-    .hl-btn span:last-child { font-size: 8px; font-weight: normal; opacity: 0.9; margin-top: 1px; }
+    .hl-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px 2px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 11px; }
+    .hl-btn span:last-child { font-size: 8.5px; font-weight: normal; opacity: 0.9; margin-top: 2px; }
     .hl-red { background: #dc2626; }
     .hl-orange { background: #ea580c; }
     .hl-pink { background: #c026d3; }
     .hl-blue { background: #2563eb; }
 
-    /* কার্ড ও সেকশন */
-    .card { background: #ffffff; border-radius: 20px; padding: 18px; margin-top: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+    .card { background: #ffffff; border-radius: 20px; padding: 18px; margin-top: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
     .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .step-tag { font-size: 10px; font-weight: bold; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 99px; }
     .step-hint { font-size: 11px; color: #64748b; }
     .card-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
 
-    /* অপরাধ সিলেকশন গ্রিড */
+    /* বাটনভিত্তিক গ্রিড */
     .crime-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .crime-item { border: 2px solid #e2e8f0; border-radius: 14px; padding: 10px; display: flex; align-items: flex-start; gap: 8px; cursor: pointer; background: #ffffff; transition: 0.15s; }
-    .crime-item.active { border-color: #2563eb !important; background: #eff6ff !important; box-shadow: 0 3px 10px rgba(37,99,235,0.15); }
-    .crime-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+    .crime-btn { 
+      border: 2px solid #e2e8f0; 
+      border-radius: 14px; 
+      padding: 10px; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 8px; 
+      background: #ffffff; 
+      cursor: pointer; 
+      text-align: left;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+    .crime-btn:active { transform: scale(0.97); }
+    .crime-btn.active { 
+      border-color: #2563eb !important; 
+      background: #eff6ff !important; 
+      box-shadow: 0 3px 10px rgba(37,99,235,0.15); 
+    }
+    .crime-icon { font-size: 20px; line-height: 1; flex-shrink: 0; pointer-events: none; }
+    .crime-info { pointer-events: none; }
     .crime-info h3 { font-size: 12px; font-weight: 700; color: #1e293b; }
     .crime-info p { font-size: 9.5px; color: #64748b; margin-top: 2px; line-height: 1.2; }
 
-    /* ফর্ম ইনপুট */
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
     .form-group { margin-bottom: 10px; }
     .form-label { display: block; font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 4px; }
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-    select, input[type="text"], input[type="tel"], textarea { width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 600; color: #0f172a; outline: none; }
+    select, input[type="text"], input[type="tel"], textarea { 
+      width: 100%; 
+      background: #f8fafc; 
+      border: 1.5px solid #cbd5e1; 
+      border-radius: 10px; 
+      padding: 9px 10px; 
+      font-size: 12px; 
+      font-weight: 600; 
+      color: #0f172a; 
+      outline: none; 
+    }
     select:focus, input:focus, textarea:focus { border-color: #2563eb; background: #ffffff; }
 
-    /* উপযুক্ত দপ্তর বক্স */
     .target-box { background: #0f172a; color: white; border-radius: 12px; padding: 12px; margin-top: 10px; }
     .target-tag { font-size: 9px; color: #34d399; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
     .target-name { font-size: 12px; font-weight: bold; color: #fde047; line-height: 1.3; }
     .target-reason { font-size: 10px; color: #cbd5e1; margin-top: 6px; background: rgba(255,255,255,0.06); padding: 6px; border-radius: 6px; }
 
-    /* বাটন */
-    .btn-submit { width: 100%; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit { width: 100%; background: #2563eb; color: white; border: none; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .btn-submit:active { background: #1d4ed8; transform: scale(0.98); }
 
-    /* মডাল */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 14px; }
     .modal-overlay.show { display: flex; }
     .modal-box { background: white; border-radius: 16px; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; padding: 16px; }
@@ -80,10 +114,9 @@
 </head>
 <body>
 
-  <!-- হেডার -->
   <header class="header">
     <div class="container" style="padding: 0;">
-      <div class="header-title-wrap">
+      <div class="header-top">
         <div class="brand-box">
           <div class="brand-icon">ন</div>
           <div>
@@ -113,70 +146,70 @@
       </div>
       <h2 class="card-title">অভিযোগ বা সেবার বিষয় নির্বাচন করুন</h2>
 
-      <div class="crime-grid">
-        <div class="crime-item active" onclick="pickCrime('drugs', this)">
-          <div class="crime-icon">💊</div>
+      <div class="crime-grid" id="crimeGrid">
+        <button type="button" class="crime-btn active" data-key="drugs">
+          <span class="crime-icon">💊</span>
           <div class="crime-info">
             <h3>মাদক ব্যবসা ও জুয়া</h3>
             <p>মাদক স্পট, কারবারি</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('harassment', this)">
-          <div class="crime-icon">⚠️</div>
+        <button type="button" class="crime-btn" data-key="harassment">
+          <span class="crime-icon">⚠️</span>
           <div class="crime-info">
             <h3>যৌন হয়রানি ও ইভটিজিং</h3>
             <p>নিপীড়ন, রাস্তায় উত্যক্ত</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('extortion', this)">
-          <div class="crime-icon">🔫</div>
+        <button type="button" class="crime-btn" data-key="extortion">
+          <span class="crime-icon">🔫</span>
           <div class="crime-info">
             <h3>চাঁদাবাজি ও ছিনতাই</h3>
             <p>টাকা দাবি, মাস্তানি</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('corruption', this)">
-          <div class="crime-icon">💰</div>
+        <button type="button" class="crime-btn" data-key="corruption">
+          <span class="crime-icon">💰</span>
           <div class="crime-info">
             <h3>ঘুষ ও অনিয়ম</h3>
             <p>প্রকল্পে আত্মসাৎ, ঘুষ</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('canal', this)">
-          <div class="crime-icon">🌊</div>
+        <button type="button" class="crime-btn" data-key="canal">
+          <span class="crime-icon">🌊</span>
           <div class="crime-info">
             <h3>খাল ও জলাশয় দখল</h3>
-            <p>জলাবদ্ধতা, সরকারি জায়গা</p>
+            <p>জলাবদ্ধতা, জায়গা দখল</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('union_issue', this)">
-          <div class="crime-icon">🏛️</div>
+        <button type="button" class="crime-btn" data-key="union_issue">
+          <span class="crime-icon">🏛️</span>
           <div class="crime-info">
             <h3>রাস্তা ও কালভার্ট ভাঙন</h3>
             <p>মেরামত, ব্রিজের সমস্যা</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('dispute', this)">
-          <div class="crime-icon">📜</div>
+        <button type="button" class="crime-btn" data-key="dispute">
+          <span class="crime-icon">📜</span>
           <div class="crime-info">
             <h3>সীমানা বিরোধ ও সালিশ</h3>
             <p>জমি বিরোধ, গ্রাম আদালত</p>
           </div>
-        </div>
+        </button>
 
-        <div class="crime-item" onclick="pickCrime('fire', this)">
-          <div class="crime-icon">🔥</div>
+        <button type="button" class="crime-btn" data-key="fire">
+          <span class="crime-icon">🔥</span>
           <div class="crime-info">
             <h3>অগ্নিকাণ্ড ও উদ্ধার</h3>
             <p>আগুন, উদ্ধারকাজ</p>
           </div>
-        </div>
+        </button>
       </div>
     </section>
 
@@ -191,7 +224,7 @@
       <div class="form-grid-2">
         <div>
           <label class="form-label">বিভাগ *</label>
-          <select id="divSelect" onchange="onDivChange()">
+          <select id="divSelect">
             <option value="">-- বিভাগ বাছুন --</option>
             <option value="ঢাকা">ঢাকা বিভাগ</option>
             <option value="চট্টগ্রাম">চট্টগ্রাম বিভাগ</option>
@@ -205,7 +238,7 @@
         </div>
         <div>
           <label class="form-label">জেলা *</label>
-          <select id="distSelect" onchange="onDistChange()" disabled>
+          <select id="distSelect" disabled>
             <option value="">আগে বিভাগ বাছুন</option>
           </select>
         </div>
@@ -214,28 +247,26 @@
       <div class="form-grid-2">
         <div>
           <label class="form-label">উপজেলা / থানা *</label>
-          <select id="upzSelect" onchange="onUpzChange()" disabled>
+          <select id="upzSelect" disabled>
             <option value="">আগে জেলা বাছুন</option>
           </select>
         </div>
         <div>
           <label class="form-label">ইউনিয়ন পরিষদ *</label>
-          <select id="unionSelect" onchange="onUnionChange()" disabled>
+          <select id="unionSelect" disabled>
             <option value="">আগে উপজেলা বাছুন</option>
           </select>
         </div>
       </div>
 
-      <!-- কাস্টম উপজেলা লেখার বক্স -->
       <div id="customUpzBox" class="form-group hidden">
         <label class="form-label" style="color: #2563eb;">উপজেলা বা থানার নাম লিখুন:</label>
-        <input type="text" id="customUpzInput" oninput="refreshRouting()" placeholder="উদা: সোনারগাঁও বা বন্দর থানা">
+        <input type="text" id="customUpzInput" placeholder="উদা: সোনারগাঁও বা রূপগঞ্জ">
       </div>
 
-      <!-- কাস্টম ইউনিয়ন লেখার বক্স -->
       <div id="customUnionBox" class="form-group hidden">
         <label class="form-label" style="color: #2563eb;">ইউনিয়ন বা এলাকার নাম লিখুন:</label>
-        <input type="text" id="customUnionInput" oninput="refreshRouting()" placeholder="উদা: শম্ভুপুরা ইউনিয়ন বা ৩ নং ওয়ার্ড">
+        <input type="text" id="customUnionInput" placeholder="উদা: শম্ভুপুরা ইউনিয়ন বা ৩ নং ওয়ার্ড">
       </div>
 
       <div class="form-group">
@@ -265,7 +296,7 @@
 
       <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
         <span style="font-size: 11px; font-weight: bold; color: #334155;">🔒 পরিচয় সম্পূর্ণ গোপন রাখুন</span>
-        <input type="checkbox" id="anonCheck" checked onchange="document.getElementById('nameBlock').classList.toggle('hidden', this.checked)" style="width: 18px; height: 18px; cursor: pointer;">
+        <input type="checkbox" id="anonCheck" checked style="width: 18px; height: 18px; cursor: pointer;">
       </div>
 
       <div id="nameBlock" class="form-grid-2 hidden">
@@ -273,7 +304,7 @@
         <input type="tel" id="uPhone" placeholder="মোবাইল নম্বর">
       </div>
 
-      <button type="button" class="btn-submit" onclick="generateLetter()">দরখাস্ত তৈরি ও ডাউনলোড করুন ➔</button>
+      <button type="button" class="btn-submit" id="submitBtn">দরখাস্ত তৈরি ও ডাউনলোড করুন ➔</button>
     </section>
 
   </main>
@@ -283,24 +314,22 @@
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
         <strong style="font-size: 14px; color: #0f172a;">প্রস্তুতকৃত দরখাস্ত</strong>
-        <span onclick="closeModal()" style="font-size: 20px; cursor: pointer; color: #64748b; font-weight: bold;">✕</span>
+        <span id="closeModalBtn" style="font-size: 20px; cursor: pointer; color: #64748b; font-weight: bold;">✕</span>
       </div>
 
-      <div id="letterBody" class="doc-preview">
-        <!-- ডায়নামিক টেক্সট বসবে -->
-      </div>
+      <div id="letterBody" class="doc-preview"></div>
 
       <div class="modal-actions">
-        <button class="btn-action bg-print" onclick="window.print()">🖨️ প্রিন্ট / PDF</button>
-        <button class="btn-action bg-wa" onclick="sendWA()">💬 হোয়াটসঅ্যাপ</button>
+        <button type="button" class="btn-action bg-print" id="printBtn">🖨️ প্রিন্ট / PDF</button>
+        <button type="button" class="btn-action bg-wa" id="waBtn">💬 হোয়াটসঅ্যাপ</button>
         <a id="mailLink" class="btn-action bg-mail" href="#">✉️ জিমেইল</a>
       </div>
     </div>
   </div>
 
   <script>
-    // পূর্ণাঙ্গ ডেটাবেজ
-    const geoDB = {
+    // ডেটাবেজ
+    var geoDB = {
       "ঢাকা": {
         "নারায়ণগঞ্জ": ["সোনারগাঁও", "আড়াইহাজার", "রূপগঞ্জ", "বন্দর", "নারায়ণগঞ্জ সদর"],
         "ঢাকা": ["সাভার", "কেরানীগঞ্জ", "ধামরাই", "দোহার", "নবাবগঞ্জ"],
@@ -351,22 +380,52 @@
       }
     };
 
-    let activeCrime = 'drugs';
+    var activeCrime = 'drugs';
 
-    // ১. অপরাধ নির্বাচন ফাংশন
-    function pickCrime(key, el) {
-      activeCrime = key;
-      document.querySelectorAll('.crime-item').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      refreshRouting();
-    }
+    // ইভেন্ট লিসেনার সেটআপ
+    window.addEventListener('DOMContentLoaded', function() {
+      // কার্ড বাটন ক্লিক
+      var buttons = document.querySelectorAll('.crime-btn');
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          buttons.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          activeCrime = this.getAttribute('data-key');
+          refreshRouting();
+        });
+      });
 
-    // ২. বিভাগ পরিবর্তন
+      // ড্রপডাউন ইভেন্টস
+      document.getElementById('divSelect').addEventListener('change', onDivChange);
+      document.getElementById('distSelect').addEventListener('change', onDistChange);
+      document.getElementById('upzSelect').addEventListener('change', onUpzChange);
+      document.getElementById('unionSelect').addEventListener('change', onUnionChange);
+      document.getElementById('customUpzInput').addEventListener('input', refreshRouting);
+      document.getElementById('customUnionInput').addEventListener('input', refreshRouting);
+
+      // অ্যানোনিমাস টগল
+      document.getElementById('anonCheck').addEventListener('change', function() {
+        var nameBlock = document.getElementById('nameBlock');
+        if (this.checked) {
+          nameBlock.classList.add('hidden');
+        } else {
+          nameBlock.classList.remove('hidden');
+        }
+      });
+
+      // সাবমিট বাটন
+      document.getElementById('submitBtn').addEventListener('click', generateLetter);
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      document.getElementById('printBtn').addEventListener('click', function() { window.print(); });
+      document.getElementById('waBtn').addEventListener('click', sendWA);
+    });
+
     function onDivChange() {
-      const div = document.getElementById('divSelect').value;
-      const distSelect = document.getElementById('distSelect');
-      const upzSelect = document.getElementById('upzSelect');
-      const unionSelect = document.getElementById('unionSelect');
+      var div = document.getElementById('divSelect').value;
+      var distSelect = document.getElementById('distSelect');
+      var upzSelect = document.getElementById('upzSelect');
+      var unionSelect = document.getElementById('unionSelect');
 
       distSelect.innerHTML = '<option value="">-- জেলা বাছুন --</option>';
       upzSelect.innerHTML = '<option value="">আগে জেলা বাছুন</option>';
@@ -382,8 +441,8 @@
 
       if (div && geoDB[div]) {
         distSelect.disabled = false;
-        Object.keys(geoDB[div]).forEach(d => {
-          const opt = document.createElement('option');
+        Object.keys(geoDB[div]).forEach(function(d) {
+          var opt = document.createElement('option');
           opt.value = d;
           opt.innerText = d;
           distSelect.appendChild(opt);
@@ -391,57 +450,20 @@
       }
     }
 
-    // ৩. জেলা পরিবর্তন
     function onDistChange() {
-      const div = document.getElementById('divSelect').value;
-      const dist = document.getElementById('distSelect').value;
-      const upzSelect = document.getElementById('upzSelect');
+      var div = document.getElementById('divSelect').value;
+      var dist = document.getElementById('distSelect').value;
+      var upzSelect = document.getElementById('upzSelect');
 
       upzSelect.innerHTML = '<option value="">-- উপজেলা বাছুন --</option>';
       upzSelect.disabled = true;
 
       if (div && dist && geoDB[div][dist]) {
         upzSelect.disabled = false;
-        geoDB[div][dist].forEach(u => {
-          const opt = document.createElement('option');
+        geoDB[div][dist].forEach(function(u) {
+          var opt = document.createElement('option');
           opt.value = u;
           opt.innerText = u;
           upzSelect.appendChild(opt);
         });
-        const customOpt = document.createElement('option');
-        customOpt.value = "custom_upz";
-        customOpt.innerText = "✍️ আমার উপজেলা তালিকায় নেই (নিজে লিখুন)";
-        upzSelect.appendChild(customOpt);
-      }
-      refreshRouting();
-    }
-
-    // ৪. উপজেলা পরিবর্তন
-    function onUpzChange() {
-      const upz = document.getElementById('upzSelect').value;
-      const unionSelect = document.getElementById('unionSelect');
-      const customUpzBox = document.getElementById('customUpzBox');
-
-      unionSelect.innerHTML = '<option value="">-- ইউনিয়ন পরিষদ বাছুন --</option>';
-
-      if (upz === "custom_upz") {
-        customUpzBox.classList.remove('hidden');
-        unionSelect.disabled = false;
-        const cOpt = document.createElement('option');
-        cOpt.value = "custom_union";
-        cOpt.innerText = "✍️ ইউনিয়ন পরিষদ নিজে লিখুন";
-        unionSelect.appendChild(cOpt);
-      } else if (upz) {
-        customUpzBox.classList.add('hidden');
-        unionSelect.disabled = false;
-        
-        // সাধারণ ডামি ইউনিয়ন
-        const commonUnions = ["১ নং ইউনিয়ন", "২ নং ইউনিয়ন", "৩ নং ইউনিয়ন", "৪ নং ইউনিয়ন", "পৌরসভা এলাকা"];
-        commonUnions.forEach(un => {
-          const opt = document.createElement('option');
-          opt.value = un;
-          opt.innerText = un;
-          unionSelect.appendChild(opt);
-        });
-        const cOpt = document.createElement('option');
-        cOpt.value = "custom
+        va
